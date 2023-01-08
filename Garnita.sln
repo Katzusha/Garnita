@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Garnita", "Garnita\Garnita.csproj", "{A0D7173D-BE59-4C00-8017-F222C307D57F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0D7173D-BE59-4C00-8017-F222C307D57F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0D7173D-BE59-4C00-8017-F222C307D57F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0D7173D-BE59-4C00-8017-F222C307D57F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0D7173D-BE59-4C00-8017-F222C307D57F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76567973-FAF7-430A-A6AB-1005BE514DE6}
+	EndGlobalSection
+EndGlobal

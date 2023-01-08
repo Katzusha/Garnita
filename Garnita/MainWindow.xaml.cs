@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Npgsql;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -177,7 +178,9 @@ namespace Garnita
             LoginScreen.Visibility = Visibility.Visible;
             RegisterScreen.Visibility = Visibility.Hidden;
             RentScreen.Visibility = Visibility.Hidden;
+            CreateRentScreen.Visibility = Visibility.Hidden;
             GarageScreen.Visibility = Visibility.Hidden;
+            CreateGarageScreen.Visibility = Visibility.Hidden;
 
             try
             {
@@ -650,13 +653,8 @@ namespace Garnita
             }
         }
 
-        private void GarageButton_Click(object sender, RoutedEventArgs e)
+        public void GenerateGarages()
         {
-            LoginScreen.Visibility = Visibility.Hidden;
-            RentScreen.Visibility = Visibility.Hidden;
-            GarageScreen.Visibility = Visibility.Visible;
-            CreateRentScreen.Visibility = Visibility.Hidden;
-
             try
             {
                 conn.Open();
@@ -681,10 +679,10 @@ namespace Garnita
 
                         Button btn = new Button();
                         btn.Name = "GarageId" + reader.GetInt32(0).ToString();
-                        btn.Content = reader.GetString(1).ToString() + "\n" + reader.GetString(2).ToString() + 
+                        btn.Content = reader.GetString(1).ToString() + "\n" + reader.GetString(2).ToString() +
                             " " + reader.GetInt32(3).ToString();
                         btn.Style = (Style)this.Resources["GeneratedButton"];
-                        //btn.Click += new RoutedEventHandler(EditRent);
+                        btn.Click += new RoutedEventHandler(EditGarage);
 
 
                         Grid.SetRow(btn, x);
@@ -704,9 +702,200 @@ namespace Garnita
             }
         }
 
+        private void EditGarage(object sender, RoutedEventArgs e)
+        {
+            GarageScreen.Visibility = Visibility.Hidden;
+            CreateGarageScreen.Visibility = Visibility.Visible;
+
+            Button btn = (Button)sender;
+
+            ModifiedGarage = Int32.Parse(btn.Name.ToString().Replace("GarageId", ""));
+
+            CreateGarageButton.Content = "Save";
+
+            try
+            {
+                conn.Open();
+
+                string strquery = "SELECT * FROM citys";
+
+                GarageCityInput.Items.Clear();
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Name = "CityId" + reader.GetInt32(0).ToString();
+                        item.Content = reader.GetString(1).ToString() + ", " + reader.GetInt32(2).ToString();
+                        GarageCityInput.Items.Add(item);
+                    }
+                }
+
+                strquery = "SELECT * FROM getgarageinfo('" + ModifiedGarage.ToString() + "')";
+
+                cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        GarageNameINput.Text = reader.GetString(0).ToString();
+                        GarageCityInput.Text = reader.GetString(1).ToString() + ", " + reader.GetInt32(2).ToString();
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void GarageButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginScreen.Visibility = Visibility.Hidden;
+            RentScreen.Visibility = Visibility.Hidden;
+            GarageScreen.Visibility = Visibility.Visible;
+            CreateRentScreen.Visibility = Visibility.Hidden;
+
+            GenerateGarages();
+        }
+
         private void GarageBackButton_Click(object sender, RoutedEventArgs e)
         {
             GenerateRents();
+        }
+
+        private void AddGarageButton_Click(object sender, RoutedEventArgs e)
+        {
+            GarageScreen.Visibility = Visibility.Hidden;
+            CreateGarageScreen.Visibility = Visibility.Visible;
+
+            try
+            {
+                conn.Open();
+
+                string strquery = "SELECT * FROM citys";
+
+                GarageCityInput.Items.Clear();
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Name = "CityId" + reader.GetInt32(0).ToString();
+                        item.Content = reader.GetString(1).ToString() + ", " + reader.GetInt32(2).ToString();
+                        GarageCityInput.Items.Add(item);
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CreateGarageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ModifiedGarage == 0)
+            {
+                try
+                {
+                    ComboBoxItem item = (ComboBoxItem)GarageCityInput.SelectedItem;
+
+                    conn.Open();
+
+                    string strquery = ("SELECT creategarage ('" + GarageNameINput.Text + "', '" + item.Name.ToString().Replace("GarageId", "") + "')");
+                    NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                    if ((Int32)cmd.ExecuteScalar() == 1)
+                    {
+
+                    }
+                    else if ((Int32)cmd.ExecuteScalar() == 0)
+                    {
+                        RentUserInput.SelectedIndex = -1;
+                        RentUserInput.Items.Clear();
+                        RentCarInput.SelectedIndex = -1;
+                        RentCarInput.Items.Clear();
+
+                        RentFromDateInput.SelectedDate = DateTime.Now;
+                        RentToDateInput.SelectedDate = DateTime.Now;
+
+                        MessageBox.Show("Wrong input. Please try again!");
+                    }
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else if (ModifiedGarage != 0)
+            {
+                try
+                {
+                    conn.Open();
+
+                    ComboBoxItem item = (ComboBoxItem)GarageCityInput.SelectedItem;
+
+                    string strquery = ("SELECT editgarage ('" + GarageNameINput.Text + "', '" + item.Name.ToString().Replace("CityId", "") +
+                        "', '" + ModifiedGarage + "')");
+                    NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                    if ((Int32)cmd.ExecuteScalar() == 1)
+                    {
+                        conn.Close();
+
+                        GarageScreen.Visibility = Visibility.Visible;
+                        CreateGarageScreen.Visibility = Visibility.Hidden;
+
+                        GenerateGarages();
+                    }
+                    else if ((Int32)cmd.ExecuteScalar() == 0)
+                    {
+                        GarageNameINput.Clear();
+                        GarageCityInput.SelectedIndex = -1;
+
+                        MessageBox.Show("Wrong input. Please try again!");
+                    }
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void CancelGarageButton_Click(object sender, RoutedEventArgs e)
+        {
+            GarageScreen.Visibility = Visibility.Visible;
+            CreateGarageScreen.Visibility = Visibility.Hidden;
+
+            GenerateGarages();
         }
     }
 }

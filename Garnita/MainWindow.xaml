@@ -591,8 +591,8 @@
             <Button Content="Cancel" x:Name="CancelRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelRentButton_Click"/>
         </Grid>
         
-        <Grid x:Name="GarageScreen" Visibility="Visible">
-            <Button x:Name="AddGarageButton" Style="{DynamicResource ContextButton}" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130, 25, 25, 25"/>
+        <Grid x:Name="GarageScreen" Visibility="Hidden">
+            <Button x:Name="AddGarageButton" Style="{DynamicResource ContextButton}" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130, 25, 25, 25" Click="AddGarageButton_Click"/>
 
             <Button x:Name="GarageBackButton" Style="{DynamicResource ContextButton}" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="GarageBackButton_Click"/>
 
@@ -600,6 +600,18 @@
                 <Grid x:Name="GaragesGrid">
                 </Grid>
             </ScrollViewer>
+        </Grid>
+
+        <Grid x:Name="CreateGarageScreen" Visibility="Hidden">
+            <TextBox x:Name="GarageNameINput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
+            <Label x:Name="GarageNameLabel" Content="Name :" Margin="0, -280, 0, 0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+            <ComboBox x:Name="GarageCityInput" Height="50" Width="450" Margin="0, 0, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+            <Label x:Name="GarageCityLabel" Content="City :" Margin="0, -80, 0, 0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+            
+            <Button Content="Create" x:Name="CreateGarageButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateGarageButton_Click"/>
+
+            <Button Content="Cancel" x:Name="CancelGarageButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelGarageButton_Click"/>
         </Grid>
     </Grid>
 </Window>

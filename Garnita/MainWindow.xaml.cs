@@ -165,6 +165,11 @@ namespace Garnita
         }
         #endregion
 
+        public int ModifiedRent = 0;
+        public int ModifiedGarage = 0;
+        public int ModifiedCar = 0;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -238,9 +243,13 @@ namespace Garnita
             LoginScreen.Visibility = Visibility.Hidden;
             RentScreen.Visibility = Visibility.Visible;
             GarageScreen.Visibility = Visibility.Hidden;
+            CreateRentScreen.Visibility = Visibility.Hidden;
 
             try
             {
+                RentsGrid.RowDefinitions.Clear();
+                RentsGrid.Children.Clear();
+
                 conn.Open();
 
                 string strquery = "SELECT * FROM getrents";
@@ -259,15 +268,89 @@ namespace Garnita
                         RentsGrid.RowDefinitions.Add(newrow);
 
                         Button btn = new Button();
-                        btn.Content = Decryption(reader.GetString(0).ToString()) + " " + Decryption(reader.GetString(1).ToString()) +
+                        btn.Name = "RentId" + reader.GetInt32(5).ToString();
+                        btn.Content = (reader.GetString(0).ToString()) + " " + (reader.GetString(1).ToString()) +
                             "\t\t\t" + reader.GetString(2).ToString().Replace('-', '.') + " - " + reader.GetString(3).ToString().Replace('-', '.') +
                             "\t\t\t" + reader.GetString(4).ToString();
                         btn.Style = (Style)this.Resources["GeneratedButton"];
+                        btn.Click += new RoutedEventHandler(EditRent);
+
 
                         Grid.SetRow(btn, x);
                         RentsGrid.Children.Add(btn);
 
                         x++;
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void EditRent(object sender, RoutedEventArgs e)
+        {
+            RentScreen.Visibility = Visibility.Hidden;
+            CreateRentScreen.Visibility = Visibility.Visible;
+
+            Button btn = (Button)sender;
+
+            ModifiedRent = Int32.Parse(btn.Name.ToString().Replace("RentId", ""));
+
+            CreateRentButton.Content = "Save";
+
+            try
+            {
+                conn.Open();
+
+                string strquery = "SELECT email FROM users";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Content = reader.GetString(0).ToString();
+                        RentUserInput.Items.Add(item);
+                    }
+                }
+
+                strquery = "SELECT licenceplate FROM cars";
+
+                cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Content = reader.GetString(0).ToString();
+                        RentCarInput.Items.Add(item);
+                    }
+                }
+
+                strquery = "SELECT * FROM getrentinfo(" + btn.Name.ToString().Replace("RentId", "") + ")";
+
+                cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        RentUserInput.Text = reader.GetString(0).ToString();
+                        RentCarInput.Text = reader.GetString(1).ToString();
+                        RentFromDateInput.Text = reader.GetDateTime(2).ToString();
+                        RentToDateInput.Text = reader.GetDateTime(3).ToString();
                     }
                 }
 
@@ -400,6 +483,230 @@ namespace Garnita
             ForgotUsernameInput.Clear();
             ForgotPasswordInput.Clear();
             ForgotPasswordInputTest.Clear();
+        }
+
+        private void CreateRentButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ModifiedRent == 0)
+            {
+                try
+                {
+                    conn.Open();
+
+                    string strquery = ("SELECT createrent('" + RentUserInput.Text + "', '" + RentCarInput.Text + "', '" +
+                        RentFromDateInput.SelectedDate.Value.ToString("yyyy-MM-dd") + "', '" +
+                        RentToDateInput.SelectedDate.Value.ToString("yyyy-MM-dd") + "')");
+
+                    NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                    if ((Int32)cmd.ExecuteScalar() == 1)
+                    {
+                        RentUserInput.SelectedIndex = -1;
+                        RentUserInput.Items.Clear();
+                        RentCarInput.SelectedIndex = -1;
+                        RentCarInput.Items.Clear();
+
+                        RentFromDateInput.SelectedDate = DateTime.Now;
+                        RentToDateInput.SelectedDate = DateTime.Now;
+
+                        conn.Close();
+
+                        GenerateRents();
+                    }
+                    else if ((Int32)cmd.ExecuteScalar() == 0)
+                    {
+                        RentUserInput.SelectedIndex = -1;
+                        RentUserInput.Items.Clear();
+                        RentCarInput.SelectedIndex = -1;
+                        RentCarInput.Items.Clear();
+
+                        RentFromDateInput.SelectedDate = DateTime.Now;
+                        RentToDateInput.SelectedDate = DateTime.Now;
+
+                        MessageBox.Show("Wrong input. Please try again!");
+                    }
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else if (ModifiedRent != 0)
+            {
+                try
+                {
+                    conn.Open();
+
+                    string strquery = ("SELECT editrent('" + RentUserInput.Text + "', '" + RentCarInput.Text + "', '" +
+                        RentFromDateInput.SelectedDate.Value.ToString("yyyy-MM-dd") + "', '" +
+                        RentToDateInput.SelectedDate.Value.ToString("yyyy-MM-dd") + "', '" + ModifiedRent.ToString() + "')");
+
+                    NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                    if ((Int32)cmd.ExecuteScalar() == 1)
+                    {
+                        RentUserInput.SelectedIndex = -1;
+                        RentUserInput.Items.Clear();
+                        RentCarInput.SelectedIndex = -1;
+                        RentCarInput.Items.Clear();
+
+                        RentFromDateInput.SelectedDate = DateTime.Now;
+                        RentToDateInput.SelectedDate = DateTime.Now;
+
+                        conn.Close();
+
+                        GenerateRents();
+                    }
+                    else if ((Int32)cmd.ExecuteScalar() == 0)
+                    {
+                        RentUserInput.SelectedIndex = -1;
+                        RentUserInput.Items.Clear();
+                        RentCarInput.SelectedIndex = -1;
+                        RentCarInput.Items.Clear();
+
+                        RentFromDateInput.SelectedDate = DateTime.Now;
+                        RentToDateInput.SelectedDate = DateTime.Now;
+
+                        MessageBox.Show("Wrong input. Please try again!");
+                    }
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void CancelRentButton_Click(object sender, RoutedEventArgs e)
+        {
+            RentUserInput.SelectedIndex = -1;
+            RentUserInput.Items.Clear();
+            RentCarInput.SelectedIndex = -1;
+            RentCarInput.Items.Clear();
+
+            RentFromDateInput.SelectedDate = DateTime.Now;
+            RentToDateInput.SelectedDate = DateTime.Now;
+
+            GenerateRents();
+
+            CreateRentButton.Content = "Create";
+            ModifiedRent = 0;
+        }
+
+        private void AddRentButton_Click(object sender, RoutedEventArgs e)
+        {
+            RentScreen.Visibility = Visibility.Hidden;
+            CreateRentScreen.Visibility = Visibility.Visible;
+
+            try
+            {
+                conn.Open();
+
+                string strquery = "SELECT email FROM users";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Content = reader.GetString(0).ToString();
+                        RentUserInput.Items.Add(item);
+                    }
+                }
+
+                strquery = "SELECT licenceplate FROM cars";
+
+                cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Content = reader.GetString(0).ToString();
+                        RentCarInput.Items.Add(item);
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void GarageButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginScreen.Visibility = Visibility.Hidden;
+            RentScreen.Visibility = Visibility.Hidden;
+            GarageScreen.Visibility = Visibility.Visible;
+            CreateRentScreen.Visibility = Visibility.Hidden;
+
+            try
+            {
+                conn.Open();
+
+                string strquery = "select * from getgarages";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    int x = 0;
+
+                    GaragesGrid.RowDefinitions.Clear();
+                    GaragesGrid.Children.Clear();
+
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        RowDefinition newrow = new RowDefinition();
+                        newrow.Height = new GridLength(75);
+                        GaragesGrid.RowDefinitions.Add(newrow);
+
+                        Button btn = new Button();
+                        btn.Name = "GarageId" + reader.GetInt32(0).ToString();
+                        btn.Content = reader.GetString(1).ToString() + "\n" + reader.GetString(2).ToString() + 
+                            " " + reader.GetInt32(3).ToString();
+                        btn.Style = (Style)this.Resources["GeneratedButton"];
+                        //btn.Click += new RoutedEventHandler(EditRent);
+
+
+                        Grid.SetRow(btn, x);
+                        GaragesGrid.Children.Add(btn);
+
+                        x++;
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void GarageBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateRents();
         }
     }
 }

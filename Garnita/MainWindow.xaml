@@ -225,7 +225,26 @@
             <Button x:Name="LogInButton" Content="Log in" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="LogInButton_Click"/>
             <Button x:Name="CanselLoginButton" Content="Exit" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CanselLoginButton_Click"/>
 
-            <Label x:Name="RegisterButton" Cursor="Hand" Content="Register ?" Style="{DynamicResource Label}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25, 25, 25, 25" MouseLeftButtonDown="RegisterButton_MouseLeftButtonDown"/>
+            <Label x:Name="RegisterButton" Cursor="Hand" Content="Register ?" Style="{DynamicResource Label}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25, 25, 25, 50" MouseLeftButtonDown="RegisterButton_MouseLeftButtonDown"/>
+            <Label x:Name="ForgotPassword" Cursor="Hand" Content="Forgot password ?" Style="{DynamicResource Label}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25, 25, 25, 0" MouseLeftButtonDown="ForgotPassword_MouseLeftButtonDown"/>
+        </Grid>
+
+        <Grid x:Name="ForgotenPasswordScreen" Visibility="Hidden">
+            <TextBox x:Name="ForgotEmailInput" Style="{DynamicResource Textbox}" Margin="0, -400, 0, 0"/>
+            <Label x:Name="ForgotEmailLabel" Content="Email :" Margin="0, -480, 0, 0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+            <TextBox x:Name="ForgotUsernameInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
+            <Label x:Name="ForgotUsernameLabel" Content="Username :" Margin="0, -280, 0, 0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+            <TextBox x:Name="ForgotPasswordInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, 0"/>
+            <Label x:Name="ForgotPasswordLabel" Content="New password :" Margin="0, -80, 0, 0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+            <PasswordBox x:Name="ForgotPasswordInputTest" Style="{DynamicResource PasswordBox}" Margin="0, 0, 0, -200"/>
+            <Label x:Name="ForgotPasswordTestLabel" Content="Re-enter new password :" Margin="0, 0, 0, -120" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+            <Button Content="Confirm" x:Name="ConfirmForgotPasswordButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="ConfirmForgotPasswordButton_Click"/>
+
+            <Button Content="Cancel" x:Name="CancelForgotPasswordButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelForgotPasswordButton_Click"/>
         </Grid>
 
         <Grid x:Name="RegisterScreen" Visibility="Hidden">
@@ -268,6 +287,10 @@
             <Button Grid.Row="2" x:Name="GarageButton" Content="Garages" Style="{DynamicResource ContextButton}" HorizontalAlignment="Left" Margin="25, 0, 0, 0"/>
 
             <Button Grid.Row="2" x:Name="CarsButton" Content="Cars" Style="{DynamicResource ContextButton}" HorizontalAlignment="Left" Margin="130, 0, 0, 0"/>
+        </Grid>
+
+        <Grid x:Name="CreateRentScreen" Visibility="Visible">
+            
         </Grid>
         
         <Grid x:Name="GarageScreen" Visibility="Hidden">

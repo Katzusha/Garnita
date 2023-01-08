@@ -337,5 +337,69 @@ namespace Garnita
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void ForgotPassword_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoginScreen.Visibility = Visibility.Hidden;
+            ForgotenPasswordScreen.Visibility = Visibility.Visible;
+
+            UsernameInput.Clear();
+            PasswordInput.Clear();
+        }
+
+        private void ConfirmForgotPasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ForgotPasswordInput.Text == ForgotPasswordInputTest.Password.ToString())
+            {
+                try
+                {
+                    conn.Open();
+
+                    string strquery = ("SELECT changepassword('" + ForgotEmailInput.Text + "', '" +
+                        Encryption(ForgotUsernameInput.Text) + "', '" + Encryption(ForgotPasswordInput.Text) + "')");
+
+                    NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                    if ((Int32)cmd.ExecuteScalar() == 1)
+                    {
+                        LoginScreen.Visibility = Visibility.Visible;
+                        ForgotenPasswordScreen.Visibility = Visibility.Hidden;
+
+                        ForgotEmailInput.Clear();
+                        ForgotUsernameInput.Clear();
+                        ForgotPasswordInput.Clear();
+                        ForgotPasswordInputTest.Clear();
+                    }
+                    else if ((Int32)cmd.ExecuteScalar() == 0)
+                    {
+                        ForgotEmailInput.Clear();
+                        ForgotUsernameInput.Clear();
+                        ForgotPasswordInput.Clear();
+                        ForgotPasswordInputTest.Clear();
+
+                        MessageBox.Show("Wrong input. Please try again!");
+                    }
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void CancelForgotPasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginScreen.Visibility = Visibility.Visible;
+            ForgotenPasswordScreen.Visibility = Visibility.Hidden;
+
+            ForgotEmailInput.Clear();
+            ForgotUsernameInput.Clear();
+            ForgotPasswordInput.Clear();
+            ForgotPasswordInputTest.Clear();
+        }
     }
 }

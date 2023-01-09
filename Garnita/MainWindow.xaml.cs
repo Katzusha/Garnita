@@ -181,6 +181,7 @@ namespace Garnita
             CreateRentScreen.Visibility = Visibility.Hidden;
             GarageScreen.Visibility = Visibility.Hidden;
             CreateGarageScreen.Visibility = Visibility.Hidden;
+            CarScreen.Visibility = Visibility.Hidden;
 
             try
             {
@@ -896,6 +897,63 @@ namespace Garnita
             CreateGarageScreen.Visibility = Visibility.Hidden;
 
             GenerateGarages();
+        }
+
+        public void GenerateCars()
+        {
+            try
+            {
+                conn.Open();
+
+                string strquery = "select * from getcars";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    int x = 0;
+
+                    CarsGrid.RowDefinitions.Clear();
+                    CarsGrid.Children.Clear();
+
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        RowDefinition newrow = new RowDefinition();
+                        newrow.Height = new GridLength(75);
+                        CarsGrid.RowDefinitions.Add(newrow);
+
+                        Button btn = new Button();
+                        btn.Name = "CarId" + reader.GetInt32(0).ToString();
+                        btn.Content = reader.GetString(1).ToString() + " - " + reader.GetString(2).ToString() +
+                            "\n" + reader.GetString(3).ToString();
+                        btn.Style = (Style)this.Resources["GeneratedButton"];
+                        //btn.Click += new RoutedEventHandler(EditCar);
+
+
+                        Grid.SetRow(btn, x);
+                        CarsGrid.Children.Add(btn);
+
+                        x++;
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CarsButton_Click(object sender, RoutedEventArgs e)
+        {
+            RentScreen.Visibility = Visibility.Hidden;
+            CarScreen.Visibility = Visibility.Visible;
+
+            GenerateCars();
         }
     }
 }

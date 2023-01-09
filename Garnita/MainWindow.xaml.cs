@@ -183,9 +183,10 @@ namespace Garnita
             CreateGarageScreen.Visibility = Visibility.Hidden;
             CarScreen.Visibility = Visibility.Hidden;
             CreateCarScreen.Visibility = Visibility.Hidden;
+            ErrorWindow.Visibility = Visibility.Hidden;
 
-            RentFromDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today));
-            RentToDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today));
+            RentFromDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today.AddDays(-1)));
+            RentToDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today.AddDays(-1)));
 
             try
             {
@@ -196,10 +197,16 @@ namespace Garnita
             catch(Exception ex)
             {
                 conn.Close();
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
 
             ChangeColor();
+        }
+
+        public void DisplayError(string error)
+        {
+            ErrorWindow.Visibility = Visibility.Visible;
+            ErrorMessage.Text = error;
         }
 
         public void ChangeColor()
@@ -232,7 +239,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
 
             
@@ -266,7 +273,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -336,7 +343,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -407,7 +414,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -440,7 +447,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -497,7 +504,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -549,7 +556,7 @@ namespace Garnita
                 {
                     conn.Close();
 
-                    MessageBox.Show(ex.Message);
+                    DisplayError(ex.Message);
                 }
             }
         }
@@ -612,7 +619,7 @@ namespace Garnita
                 {
                     conn.Close();
 
-                    MessageBox.Show(ex.Message);
+                    DisplayError(ex.Message);
                 }
             }
             else if (ModifiedRent != 0)
@@ -660,7 +667,7 @@ namespace Garnita
                 {
                     conn.Close();
 
-                    MessageBox.Show(ex.Message);
+                    DisplayError(ex.Message);
                 }
             }
         }
@@ -672,7 +679,7 @@ namespace Garnita
             RentCarInput.SelectedIndex = -1;
             RentCarInput.Items.Clear();
 
-            RentFromDateInput.SelectedDate = DateTime.Now;
+            RentFromDateInput.SelectedDate = DateTime.Today;
             RentToDateInput.SelectedDate = DateTime.Now;
 
             GenerateRents();
@@ -726,7 +733,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -776,7 +783,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -833,7 +840,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -866,7 +873,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -918,7 +925,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -971,7 +978,7 @@ namespace Garnita
                 {
                     conn.Close();
 
-                    MessageBox.Show(ex.Message);
+                    DisplayError(ex.Message);
                 }
             }
             else if (ModifiedGarage != 0)
@@ -1011,7 +1018,7 @@ namespace Garnita
                 {
                     conn.Close();
 
-                    MessageBox.Show(ex.Message);
+                    DisplayError(ex.Message);
                 }
             }
         }
@@ -1072,7 +1079,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -1131,7 +1138,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -1164,7 +1171,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -1209,7 +1216,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
         private void CancelCarButton_Click(object sender, RoutedEventArgs e)
@@ -1264,7 +1271,7 @@ namespace Garnita
                 {
                     conn.Close();
 
-                    MessageBox.Show(ex.Message);
+                    DisplayError(ex.Message);
                 }
             }
             else if (ModifiedCar != 0)
@@ -1308,7 +1315,7 @@ namespace Garnita
                 {
                     conn.Close();
 
-                    MessageBox.Show(ex.Message);
+                    DisplayError(ex.Message);
                 }
             }
         }
@@ -1354,7 +1361,7 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
         }
 
@@ -1400,8 +1407,14 @@ namespace Garnita
             {
                 conn.Close();
 
-                MessageBox.Show(ex.Message);
+                DisplayError(ex.Message);
             }
+        }
+
+        private void ErrorOkButton_Click(object sender, RoutedEventArgs e)
+        {
+            ErrorWindow.Visibility = Visibility.Hidden;
+            ErrorMessage.Text = "ErrorMessage";
         }
     }
 }

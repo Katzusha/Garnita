@@ -774,5 +774,13 @@
 
             <Button Content="Cancel" x:Name="CancelColorButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelColorButton_Click"/>
         </Grid>
+
+        <Border x:Name="ErrorWindow" Height="250" Width="400" CornerRadius="5" Background="#3e3e3e">
+            <Grid>
+                <TextBox x:Name="ErrorMessage" Text="ErrorMessage" BorderThickness="0" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" IsReadOnly="True" Cursor="Arrow" Margin="5, 5, 5, 75" Background="Transparent"/>
+
+                <Button Content="OK" x:Name="ErrorOkButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5, 5, 5, 5" Click="ErrorOkButton_Click"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

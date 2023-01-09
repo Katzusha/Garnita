@@ -27,7 +27,7 @@ namespace Garnita
     /// </summary>
     public partial class MainWindow : Window
     {
-        string connstring = "Server=ep-purple-mode-252889.eu-central-1.aws.neon.tech;Database=Garnita;User Id=andraz.kosak;Password=7xA0oyeXHNrQ;";
+        string connstring = "Server=ep-purple-mode-252889.eu-central-1.aws.neon.tech;Database=Garnita;User Id=andraz.kosak;Password=2tUHlDPGdn7x;";
         NpgsqlConnection conn;
 
         #region ENCRYPTION AND DECRYPTION
@@ -182,6 +182,7 @@ namespace Garnita
             GarageScreen.Visibility = Visibility.Hidden;
             CreateGarageScreen.Visibility = Visibility.Hidden;
             CarScreen.Visibility = Visibility.Hidden;
+            CreateCarScreen.Visibility = Visibility.Hidden;
 
             try
             {
@@ -194,6 +195,44 @@ namespace Garnita
                 conn.Close();
                 MessageBox.Show(ex.Message);
             }
+
+            ChangeColor();
+        }
+
+        public void ChangeColor()
+        {
+            try
+            {
+
+                conn.Open();
+
+                string strquery = "SELECT * FROM design";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        Resources["PrimaryColor"] = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + reader.GetString(1));
+                        Resources["SecondaryColor"] = (Color)ColorConverter.ConvertFromString("#" + reader.GetString(2));
+                        this.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + reader.GetString(3));
+                        Resources["FontColor"] = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + reader.GetString(4));
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+
+            
         }
 
         private void LogInButton_Click(object sender, RoutedEventArgs e)
@@ -822,12 +861,21 @@ namespace Garnita
 
                     conn.Open();
 
-                    string strquery = ("SELECT creategarage ('" + GarageNameINput.Text + "', '" + item.Name.ToString().Replace("GarageId", "") + "')");
+                    string strquery = ("SELECT creategarage ('" + GarageNameINput.Text + "', '" + item.Name.ToString().Replace("CityId", "") + "')");
                     NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
 
                     if ((Int32)cmd.ExecuteScalar() == 1)
                     {
+                        RentUserInput.SelectedIndex = -1;
+                        RentUserInput.Items.Clear();
+                        RentCarInput.SelectedIndex = -1;
+                        RentCarInput.Items.Clear();
 
+                        RentFromDateInput.SelectedDate = DateTime.Now;
+                        RentToDateInput.SelectedDate = DateTime.Now;
+
+                        CreateGarageScreen.Visibility = Visibility.Hidden;
+                        GarageScreen.Visibility = Visibility.Visible;
                     }
                     else if ((Int32)cmd.ExecuteScalar() == 0)
                     {
@@ -870,6 +918,8 @@ namespace Garnita
                         GarageScreen.Visibility = Visibility.Visible;
                         CreateGarageScreen.Visibility = Visibility.Hidden;
 
+                        ModifiedGarage = 0;
+
                         GenerateGarages();
                     }
                     else if ((Int32)cmd.ExecuteScalar() == 0)
@@ -895,6 +945,8 @@ namespace Garnita
         {
             GarageScreen.Visibility = Visibility.Visible;
             CreateGarageScreen.Visibility = Visibility.Hidden;
+
+            ModifiedGarage = 0;
 
             GenerateGarages();
         }
@@ -928,7 +980,7 @@ namespace Garnita
                         btn.Content = reader.GetString(1).ToString() + " - " + reader.GetString(2).ToString() +
                             "\n" + reader.GetString(3).ToString();
                         btn.Style = (Style)this.Resources["GeneratedButton"];
-                        //btn.Click += new RoutedEventHandler(EditCar);
+                        btn.Click += new RoutedEventHandler(EditCar);
 
 
                         Grid.SetRow(btn, x);
@@ -948,12 +1000,289 @@ namespace Garnita
             }
         }
 
+        public void EditCar(object sender, RoutedEventArgs e)
+        {
+            CarScreen.Visibility = Visibility.Hidden;
+            CreateCarScreen.Visibility = Visibility.Visible;
+
+            Button btn = (Button)sender;
+
+            ModifiedCar = Int32.Parse(btn.Name.ToString().Replace("CarId", ""));
+
+            CreateCarButton.Content = "Save";
+
+            try
+            {
+                conn.Open();
+
+                string strquery = "select * from getgarages";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    CarGarageInput.Items.Clear();
+
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Name = "GarageId" + reader.GetInt32(0).ToString();
+                        item.Content = reader.GetString(1).ToString() + ", " + reader.GetString(2).ToString();
+                        CarGarageInput.Items.Add(item);
+                    }
+                }
+
+
+                strquery = "SELECT * FROM getcarinfo('" + ModifiedCar.ToString() + "')";
+
+                cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        CarNameInput.Text = reader.GetString(0).ToString();
+                        CarLicenceplateInput.Text = reader.GetString(1).ToString();
+                        CarGarageInput.Text = reader.GetString(2).ToString();
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void CarsButton_Click(object sender, RoutedEventArgs e)
         {
             RentScreen.Visibility = Visibility.Hidden;
             CarScreen.Visibility = Visibility.Visible;
 
             GenerateCars();
+        }
+
+        private void AddCarButton_Click(object sender, RoutedEventArgs e)
+        {
+            CarScreen.Visibility = Visibility.Hidden;
+            CreateCarScreen.Visibility = Visibility.Visible;
+
+            try
+            {
+                conn.Open();
+
+                string strquery = "select * from getgarages";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    CarGarageInput.Items.Clear();
+
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Name = "GarageId" + reader.GetInt32(0).ToString();
+                        item.Content = reader.GetString(1).ToString() + ", " + reader.GetString(2).ToString();
+                        CarGarageInput.Items.Add(item);
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CreateCarButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ModifiedCar == 0)
+            {
+                try
+                {
+                    ComboBoxItem item = (ComboBoxItem)CarGarageInput.SelectedItem;
+
+                    conn.Open();
+
+                    string strquery = ("SELECT createcar ('" + CarNameInput.Text + "', '" + CarLicenceplateInput.Text + "', '" + item.Name.ToString().Replace("GarageId", "") + "')");
+                    NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                    if ((Int32)cmd.ExecuteScalar() == 1)
+                    {
+                        CarGarageInput.SelectedIndex = -1;
+                        CarGarageInput.Items.Clear();
+                        CarNameInput.Clear();
+                        CarLicenceplateInput.Clear();
+
+                        CreateCarScreen.Visibility = Visibility.Hidden;
+                        CarScreen.Visibility = Visibility.Visible;
+
+                        conn.Close();
+
+                        GenerateCars();
+                    }
+                    else if ((Int32)cmd.ExecuteScalar() == 0)
+                    {
+                        CarGarageInput.SelectedIndex = -1;
+                        CarGarageInput.Items.Clear();
+                        CarNameInput.Clear();
+                        CarLicenceplateInput.Clear();
+
+                        MessageBox.Show("Wrong input. Please try again!");
+                    }
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else if (ModifiedCar != 0)
+            {
+                try
+                {
+                    conn.Open();
+
+                    ComboBoxItem item = (ComboBoxItem)CarGarageInput.SelectedItem;
+
+                    string strquery = ("SELECT editcar ('" + ModifiedCar.ToString() + "', '" + CarNameInput.Text + "', '" + CarLicenceplateInput.Text + "', '" + item.Name.ToString().Replace("GarageId", "") + "')");
+                    NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                    if ((Int32)cmd.ExecuteScalar() == 1)
+                    {
+                        CarGarageInput.SelectedIndex = -1;
+                        CarGarageInput.Items.Clear();
+                        CarNameInput.Clear();
+                        CarLicenceplateInput.Clear();
+
+                        CreateCarScreen.Visibility = Visibility.Hidden;
+                        CarScreen.Visibility = Visibility.Visible;
+
+                        conn.Close();
+
+                        GenerateCars();
+                    }
+                    else if ((Int32)cmd.ExecuteScalar() == 0)
+                    {
+                        CarGarageInput.SelectedIndex = -1;
+                        CarGarageInput.Items.Clear();
+                        CarNameInput.Clear();
+                        CarLicenceplateInput.Clear();
+
+                        MessageBox.Show("Wrong input. Please try again!");
+                    }
+
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void CarBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            CarScreen.Visibility = Visibility.Hidden;
+            RentScreen.Visibility = Visibility.Visible;
+
+            GenerateRents();
+        }
+
+        private void ChangeColorbutton_Click(object sender, RoutedEventArgs e)
+        {
+            RentScreen.Visibility = Visibility.Hidden;
+            ColorScreen.Visibility = Visibility.Visible;
+
+            try
+            {
+                conn.Open();
+
+                string strquery = "select * from design";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    CarGarageInput.Items.Clear();
+
+                    // Read the rows of the result set
+                    while (reader.Read())
+                    {
+                        ColorPrimaryInput.Text = reader.GetString(1).ToString();
+                        ColorSecondaryinput.Text = reader.GetString(2).ToString();
+                        ColorBackgroundInput.Text = reader.GetString(3).ToString();
+                        ColorFontinput.Text = reader.GetString(4).ToString();
+                    }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CancelColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            RentScreen.Visibility = Visibility.Visible;
+            ColorScreen.Visibility = Visibility.Hidden;
+        }
+
+        private void SaveColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                conn.Open();
+
+                ComboBoxItem item = (ComboBoxItem)CarGarageInput.SelectedItem;
+
+                string strquery = ("SELECT editdesign('" + ColorPrimaryInput.Text + "', '" + ColorSecondaryinput.Text + "', '" + ColorBackgroundInput.Text + 
+                    "', '" + ColorFontinput.Text + "')");
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                if ((Int32)cmd.ExecuteScalar() == 1)
+                {
+                    ColorScreen.Visibility = Visibility.Hidden;
+                    RentScreen.Visibility = Visibility.Visible;
+
+                    conn.Close();
+
+                    ChangeColor();
+
+                    GenerateRents();
+                }
+                else if ((Int32)cmd.ExecuteScalar() == 0)
+                {
+                    MessageBox.Show("Wrong input. Please try again!");
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

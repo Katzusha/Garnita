@@ -184,6 +184,9 @@ namespace Garnita
             CarScreen.Visibility = Visibility.Hidden;
             CreateCarScreen.Visibility = Visibility.Hidden;
 
+            RentFromDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today));
+            RentToDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today));
+
             try
             {
                 conn = new NpgsqlConnection(connstring);
@@ -317,6 +320,7 @@ namespace Garnita
                             "\t\t\t" + reader.GetString(4).ToString();
                         btn.Style = (Style)this.Resources["GeneratedButton"];
                         btn.Click += new RoutedEventHandler(EditRent);
+                        btn.MouseRightButtonDown += new MouseButtonEventHandler(DeleteRent);
 
 
                         Grid.SetRow(btn, x);
@@ -395,6 +399,39 @@ namespace Garnita
                         RentFromDateInput.Text = reader.GetDateTime(2).ToString();
                         RentToDateInput.Text = reader.GetDateTime(3).ToString();
                     }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void DeleteRent(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+
+            try
+            {
+                conn.Open();
+
+                string strquery = ("SELECT deleterent('" + btn.Name.ToString().Replace("RentId", "") + "')");
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                if ((Int32)cmd.ExecuteScalar() == 1)
+                {
+                    conn.Close();
+
+                    GenerateRents();
+                }
+                else if ((Int32)cmd.ExecuteScalar() == 0)
+                {
+                    MessageBox.Show("Something went wrong. Please try again!");
                 }
 
                 conn.Close();
@@ -723,6 +760,7 @@ namespace Garnita
                             " " + reader.GetInt32(3).ToString();
                         btn.Style = (Style)this.Resources["GeneratedButton"];
                         btn.Click += new RoutedEventHandler(EditGarage);
+                        btn.MouseRightButtonDown += new MouseButtonEventHandler(DeleteGarage);
 
 
                         Grid.SetRow(btn, x);
@@ -787,6 +825,39 @@ namespace Garnita
                         GarageNameINput.Text = reader.GetString(0).ToString();
                         GarageCityInput.Text = reader.GetString(1).ToString() + ", " + reader.GetInt32(2).ToString();
                     }
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void DeleteGarage(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+
+            try
+            {
+                conn.Open();
+
+                string strquery = ("SELECT deletegarage('" + btn.Name.ToString().Replace("GarageId", "") + "')");
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                if ((Int32)cmd.ExecuteScalar() == 1)
+                {
+                    conn.Close();
+
+                    GenerateGarages();
+                }
+                else if ((Int32)cmd.ExecuteScalar() == 0)
+                {
+                    MessageBox.Show("Something went wrong. Please try again!");
                 }
 
                 conn.Close();
@@ -876,6 +947,10 @@ namespace Garnita
 
                         CreateGarageScreen.Visibility = Visibility.Hidden;
                         GarageScreen.Visibility = Visibility.Visible;
+
+                        conn.Close();
+
+                        GenerateGarages();
                     }
                     else if ((Int32)cmd.ExecuteScalar() == 0)
                     {
@@ -981,6 +1056,7 @@ namespace Garnita
                             "\n" + reader.GetString(3).ToString();
                         btn.Style = (Style)this.Resources["GeneratedButton"];
                         btn.Click += new RoutedEventHandler(EditCar);
+                        btn.MouseRightButtonDown += new MouseButtonEventHandler(DeleteCar);
 
 
                         Grid.SetRow(btn, x);
@@ -1059,6 +1135,39 @@ namespace Garnita
             }
         }
 
+        private void DeleteCar(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+
+            try
+            {
+                conn.Open();
+
+                string strquery = ("SELECT deletecar('" + btn.Name.ToString().Replace("CarId", "") + "')");
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                if ((Int32)cmd.ExecuteScalar() == 1)
+                {
+                    conn.Close();
+
+                    GenerateCars();
+                }
+                else if ((Int32)cmd.ExecuteScalar() == 0)
+                {
+                    MessageBox.Show("Something went wrong. Please try again!");
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void CarsButton_Click(object sender, RoutedEventArgs e)
         {
             RentScreen.Visibility = Visibility.Hidden;
@@ -1102,6 +1211,14 @@ namespace Garnita
 
                 MessageBox.Show(ex.Message);
             }
+        }
+        private void CancelCarButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModifiedCar = 0;
+            CreateCarScreen.Visibility = Visibility.Hidden;
+            CarScreen.Visibility = Visibility.Visible;
+
+            GenerateCars();
         }
 
         private void CreateCarButton_Click(object sender, RoutedEventArgs e)
@@ -1245,6 +1362,8 @@ namespace Garnita
         {
             RentScreen.Visibility = Visibility.Visible;
             ColorScreen.Visibility = Visibility.Hidden;
+
+            GenerateRents();
         }
 
         private void SaveColorButton_Click(object sender, RoutedEventArgs e)

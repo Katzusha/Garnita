@@ -754,7 +754,7 @@
 
             <Button Content="Create" x:Name="CreateCarButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateCarButton_Click"/>
 
-            <Button Content="Cancel" x:Name="CancelCarButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelGarageButton_Click"/>
+            <Button Content="Cancel" x:Name="CancelCarButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelCarButton_Click"/>
         </Grid>
 
         <Grid x:Name="ColorScreen" Visibility="Hidden">
@@ -772,7 +772,7 @@
             
             <Button Content="Save" x:Name="SaveColorButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="SaveColorButton_Click"/>
 
-            <Button Content="Cancel" x:Name="CancelColorButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelGarageButton_Click"/>
+            <Button Content="Cancel" x:Name="CancelColorButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelColorButton_Click"/>
         </Grid>
     </Grid>
 </Window>

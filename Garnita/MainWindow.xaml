@@ -17,6 +17,21 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Cursor" Value="IBeam"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border Name="Border" CornerRadius="5" Padding="0">
+                            <Border.Background>
+                                <SolidColorBrush Color="#5A4261" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="Transparent" />
+                            </Border.BorderBrush>
+                            <ScrollViewer Margin="20, 0, 20, 0" x:Name="PART_ContentHost" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="PasswordBox" TargetType="PasswordBox">
@@ -28,6 +43,21 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Cursor" Value="IBeam"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border Name="Border" CornerRadius="5" Padding="0">
+                            <Border.Background>
+                                <SolidColorBrush Color="#5A4261" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="Transparent" />
+                            </Border.BorderBrush>
+                            <ScrollViewer Margin="20, 0, 20, 0" x:Name="PART_ContentHost" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="DatePicker" TargetType="DatePicker">
@@ -39,6 +69,21 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Cursor" Value="IBeam"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border Name="Border" CornerRadius="5" Padding="0">
+                            <Border.Background>
+                                <SolidColorBrush Color="#5A4261" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="Transparent" />
+                            </Border.BorderBrush>
+                            <ScrollViewer Margin="20, 0, 20, 0" x:Name="PART_ContentHost" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="Label" TargetType="Label">
@@ -52,7 +97,24 @@
             <Setter Property="Height" Value="auto"/>
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0, 0, 0, 5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#766776" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="ContextButton" TargetType="Button">
@@ -62,24 +124,68 @@
             <Setter Property="Width" Value="100"/>
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#767676" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="TrueButton" TargetType="Button">
             <Setter Property="Foreground" Value="#FFFFFF"/>
             <Setter Property="Background" Value="#4CA04C"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="Width" Value="100"/>
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#4CA04C" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="FalseButton" TargetType="Button">
             <Setter Property="Foreground" Value="#FFFFFF"/>
-            <Setter Property="Background" Value="#FF5656"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="#00FFFFFF"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="Width" Value="100"/>
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF5656" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
         
         <ControlTemplate x:Key="DatePickerTemplate1" TargetType="{x:Type DatePicker}">
@@ -592,6 +698,8 @@
         </Grid>
         
         <Grid x:Name="GarageScreen" Visibility="Hidden">
+            <Label x:Name="GarageLabel" Content="Garages" Style="{DynamicResource Label}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25"/>
+
             <Button x:Name="AddGarageButton" Style="{DynamicResource ContextButton}" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130, 25, 25, 25" Click="AddGarageButton_Click"/>
 
             <Button x:Name="GarageBackButton" Style="{DynamicResource ContextButton}" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="GarageBackButton_Click"/>
@@ -612,6 +720,19 @@
             <Button Content="Create" x:Name="CreateGarageButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateGarageButton_Click"/>
 
             <Button Content="Cancel" x:Name="CancelGarageButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelGarageButton_Click"/>
+        </Grid>
+
+        <Grid x:Name="CarScreen" Visibility="Visible">
+            <Label x:Name="CarLabel" Content="Cars" Style="{DynamicResource Label}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25"/>
+            
+            <Button x:Name="AddCarButton" Style="{DynamicResource ContextButton}" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130, 25, 25, 25" Click="AddGarageButton_Click"/>
+
+            <Button x:Name="CarBackButton" Style="{DynamicResource ContextButton}" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="GarageBackButton_Click"/>
+
+            <ScrollViewer Margin="25, 100, 25, 25" VerticalScrollBarVisibility="Auto">
+                <Grid x:Name="CarsGrid">
+                </Grid>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Window>

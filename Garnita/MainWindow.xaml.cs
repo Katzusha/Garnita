@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -184,6 +185,7 @@ namespace Garnita
             CarScreen.Visibility = Visibility.Hidden;
             CreateCarScreen.Visibility = Visibility.Hidden;
             ErrorWindow.Visibility = Visibility.Hidden;
+            ColorScreen.Visibility = Visibility.Hidden;
 
             RentFromDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today.AddDays(-1)));
             RentToDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today.AddDays(-1)));
@@ -1352,6 +1354,11 @@ namespace Garnita
                         ColorSecondaryinput.Text = reader.GetString(2).ToString();
                         ColorBackgroundInput.Text = reader.GetString(3).ToString();
                         ColorFontinput.Text = reader.GetString(4).ToString();
+
+                        ColorPrimaryInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorPrimaryInput.Text);
+                        ColorSecondaryInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorSecondaryinput.Text);
+                        ColorBackgroundInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorBackgroundInput.Text);
+                        ColorFontInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorFontinput.Text);
                     }
                 }
 
@@ -1415,6 +1422,42 @@ namespace Garnita
         {
             ErrorWindow.Visibility = Visibility.Hidden;
             ErrorMessage.Text = "ErrorMessage";
+        }
+
+        private void ColorPrimaryInput_KeyUp(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                ColorPrimaryInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorPrimaryInput.Text);
+            }
+            catch { }
+        }
+
+        private void ColorSecondaryinput_KeyUp(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                ColorSecondaryInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorSecondaryinput.Text);
+            }
+            catch { }
+        }
+
+        private void ColorBackgroundInput_KeyUp(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                ColorBackgroundInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorBackgroundInput.Text);
+            }
+            catch { }
+        }
+
+        private void ColorFontinput_KeyUp(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                ColorFontInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorFontinput.Text);
+            }
+            catch { }
         }
     }
 }

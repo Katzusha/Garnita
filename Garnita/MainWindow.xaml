@@ -666,7 +666,7 @@
             <Button Content="Cancel" x:Name="CanselCreateUserButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CanselCreateUserButton_Click"/>
         </Grid>
 
-        <Grid x:Name="RentScreen" Visibility="Visible">
+        <Grid x:Name="RentScreen" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="90px"/>
                 <RowDefinition/>
@@ -757,17 +757,22 @@
             <Button Content="Cancel" x:Name="CancelCarButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelCarButton_Click"/>
         </Grid>
 
-        <Grid x:Name="ColorScreen" Visibility="Hidden">
-            <TextBox x:Name="ColorPrimaryInput" Style="{DynamicResource Textbox}" Margin="0, -400, 0, 0"/>
+        <Grid x:Name="ColorScreen" Visibility="Visible">
+
+            <Border x:Name="ColorPrimaryInputChecker" Height="50" Width="50" CornerRadius="10" Margin="-550, -400, 0, 0" Background="#FFFFFF" BorderBrush="#AFAFAF" BorderThickness="2"/>
+            <TextBox x:Name="ColorPrimaryInput" Style="{DynamicResource Textbox}" Margin="0, -400, 0, 0" KeyUp="ColorPrimaryInput_KeyUp"/>
             <Label Style="{DynamicResource Label}" x:Name="ColorPrimaryLabel" Content="Primary color :" Margin="0, -480, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <TextBox x:Name="ColorSecondaryinput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
+            <Border x:Name="ColorSecondaryInputChecker" Height="50" Width="50" CornerRadius="10" Margin="-550, -200, 0, 0" Background="#FFFFFF" BorderBrush="#AFAFAF" BorderThickness="2"/>
+            <TextBox x:Name="ColorSecondaryinput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0" KeyUp="ColorSecondaryinput_KeyUp"/>
             <Label Style="{DynamicResource Label}" x:Name="ColorSecondaryLabel" Content="Secondary color :" Margin="0, -280, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <TextBox x:Name="ColorBackgroundInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, 0"/>
+            <Border x:Name="ColorBackgroundInputChecker" Height="50" Width="50" CornerRadius="10" Margin="-550, 0, 0, 0" Background="#FFFFFF" BorderBrush="#AFAFAF" BorderThickness="2"/>
+            <TextBox x:Name="ColorBackgroundInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, 0" KeyUp="ColorBackgroundInput_KeyUp"/>
             <Label Style="{DynamicResource Label}" x:Name="ColorbackgroundLabel" Content="Background color :" Margin="0, -80, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <TextBox x:Name="ColorFontinput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, -200"/>
+            <Border x:Name="ColorFontInputChecker" Height="50" Width="50" CornerRadius="10" Margin="-550, 0, 0, -200" Background="#FFFFFF" BorderBrush="#AFAFAF" BorderThickness="2"/>
+            <TextBox x:Name="ColorFontinput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, -200" KeyUp="ColorFontinput_KeyUp"/>
             <Label Style="{DynamicResource Label}" x:Name="colorFontLabel" Content="Text color :" Margin="0, 0, 0, -120" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
             
             <Button Content="Save" x:Name="SaveColorButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="SaveColorButton_Click"/>
@@ -775,7 +780,7 @@
             <Button Content="Cancel" x:Name="CancelColorButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelColorButton_Click"/>
         </Grid>
 
-        <Border x:Name="ErrorWindow" Height="250" Width="400" CornerRadius="5" Background="#3e3e3e">
+        <Border x:Name="ErrorWindow" Height="250" Width="400" CornerRadius="5" Background="#3e3e3e" Visibility="Hidden">
             <Grid>
                 <TextBox x:Name="ErrorMessage" Text="ErrorMessage" BorderThickness="0" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" IsReadOnly="True" Cursor="Arrow" Margin="5, 5, 5, 75" Background="Transparent"/>
 

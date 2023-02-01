@@ -324,9 +324,7 @@ namespace Garnita
 
                         Button btn = new Button();
                         btn.Name = "RentId" + reader.GetInt32(5).ToString();
-                        btn.Content = (reader.GetString(0).ToString()) + " " + (reader.GetString(1).ToString()) +
-                            "\t\t\t" + reader.GetString(2).ToString().Replace('-', '.') + " - " + reader.GetString(3).ToString().Replace('-', '.') +
-                            "\t\t\t" + reader.GetString(4).ToString();
+
                         btn.Style = (Style)this.Resources["GeneratedButton"];
                         btn.Click += new RoutedEventHandler(EditRent);
                         btn.MouseRightButtonDown += new MouseButtonEventHandler(DeleteRent);
@@ -334,6 +332,32 @@ namespace Garnita
 
                         Grid.SetRow(btn, x);
                         RentsGrid.Children.Add(btn);
+
+                        Label label = new Label();
+                        label.Content = (reader.GetString(0).ToString()) + " " + (reader.GetString(1).ToString());
+                        label.Style = (Style)this.Resources["GeneratedLabel"];
+                        Grid.SetRow(label, x);
+                        Grid.SetColumn(label, 0);
+                        RentsGrid.Children.Add(label);
+
+                        label = new Label();
+                        label.Content = reader.GetString(2).ToString().Replace('-', '.') + " - " + reader.GetString(3).ToString().Replace('-', '.');
+                        label.Style = (Style)this.Resources["GeneratedLabel"];
+                        Grid.SetRow(label, x);
+                        Grid.SetColumn(label, 1);
+                        RentsGrid.Children.Add(label);
+
+                        label = new Label();
+                        label.Content = reader.GetString(4).ToString();
+                        label.Style = (Style)this.Resources["GeneratedLabel"];
+                        Grid.SetRow(label, x);
+                        Grid.SetColumn(label, 2);
+                        RentsGrid.Children.Add(label);
+
+                        //btn.Content = (reader.GetString(0).ToString()) + " " + (reader.GetString(1).ToString()) +
+                        //    "\t\t\t" + reader.GetString(2).ToString().Replace('-', '.') + " - " + reader.GetString(3).ToString().Replace('-', '.') +
+                        //    "\t\t\t" + reader.GetString(4).ToString();
+
 
                         x++;
                     }

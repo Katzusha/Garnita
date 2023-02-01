@@ -341,17 +341,24 @@ namespace Garnita
                         RentsGrid.Children.Add(label);
 
                         label = new Label();
-                        label.Content = reader.GetString(2).ToString().Replace('-', '.') + " - " + reader.GetString(3).ToString().Replace('-', '.');
+                        label.Content = reader.GetString(2).ToString().Replace('-', '.');
                         label.Style = (Style)this.Resources["GeneratedLabel"];
                         Grid.SetRow(label, x);
                         Grid.SetColumn(label, 1);
                         RentsGrid.Children.Add(label);
 
                         label = new Label();
-                        label.Content = reader.GetString(4).ToString();
+                        label.Content = reader.GetString(3).ToString().Replace('-', '.');
                         label.Style = (Style)this.Resources["GeneratedLabel"];
                         Grid.SetRow(label, x);
                         Grid.SetColumn(label, 2);
+                        RentsGrid.Children.Add(label);
+
+                        label = new Label();
+                        label.Content = reader.GetString(4).ToString();
+                        label.Style = (Style)this.Resources["GeneratedLabel"];
+                        Grid.SetRow(label, x);
+                        Grid.SetColumn(label, 3);
                         RentsGrid.Children.Add(label);
 
                         //btn.Content = (reader.GetString(0).ToString()) + " " + (reader.GetString(1).ToString()) +
@@ -784,20 +791,32 @@ namespace Garnita
                     while (reader.Read())
                     {
                         RowDefinition newrow = new RowDefinition();
-                        newrow.Height = new GridLength(75);
+                        newrow.Height = new GridLength(50);
                         GaragesGrid.RowDefinitions.Add(newrow);
 
                         Button btn = new Button();
                         btn.Name = "GarageId" + reader.GetInt32(0).ToString();
-                        btn.Content = reader.GetString(1).ToString() + "\n" + reader.GetString(2).ToString() +
-                            " " + reader.GetInt32(3).ToString();
                         btn.Style = (Style)this.Resources["GeneratedButton"];
                         btn.Click += new RoutedEventHandler(EditGarage);
                         btn.MouseRightButtonDown += new MouseButtonEventHandler(DeleteGarage);
 
-
                         Grid.SetRow(btn, x);
                         GaragesGrid.Children.Add(btn);
+
+                        Label label = new Label();
+                        label.Content = reader.GetString(1).ToString();
+                        label.Style = (Style)this.Resources["GeneratedLabel"];
+                        Grid.SetRow(label, x);
+                        Grid.SetColumn(label, 0);
+                        GaragesGrid.Children.Add(label);
+
+                        label = new Label();
+                        label.Content = reader.GetString(2).ToString() +
+                            " " + reader.GetInt32(3).ToString();
+                        label.Style = (Style)this.Resources["GeneratedLabel"];
+                        Grid.SetRow(label, x);
+                        Grid.SetColumn(label, 1);
+                        GaragesGrid.Children.Add(label);
 
                         x++;
                     }
@@ -1080,13 +1099,11 @@ namespace Garnita
                     while (reader.Read())
                     {
                         RowDefinition newrow = new RowDefinition();
-                        newrow.Height = new GridLength(75);
+                        newrow.Height = new GridLength(50);
                         CarsGrid.RowDefinitions.Add(newrow);
 
                         Button btn = new Button();
                         btn.Name = "CarId" + reader.GetInt32(0).ToString();
-                        btn.Content = reader.GetString(1).ToString() + " - " + reader.GetString(2).ToString() +
-                            "\n" + reader.GetString(3).ToString();
                         btn.Style = (Style)this.Resources["GeneratedButton"];
                         btn.Click += new RoutedEventHandler(EditCar);
                         btn.MouseRightButtonDown += new MouseButtonEventHandler(DeleteCar);
@@ -1094,6 +1111,27 @@ namespace Garnita
 
                         Grid.SetRow(btn, x);
                         CarsGrid.Children.Add(btn);
+
+                        Label label = new Label();
+                        label.Content = reader.GetString(1).ToString();
+                        label.Style = (Style)this.Resources["GeneratedLabel"];
+                        Grid.SetRow(label, x);
+                        Grid.SetColumn(label, 0);
+                        CarsGrid.Children.Add(label);
+
+                        label = new Label();
+                        label.Content = reader.GetString(2).ToString();
+                        label.Style = (Style)this.Resources["GeneratedLabel"];
+                        Grid.SetRow(label, x);
+                        Grid.SetColumn(label, 1);
+                        CarsGrid.Children.Add(label);
+
+                        label = new Label();
+                        label.Content = reader.GetString(3).ToString();
+                        label.Style = (Style)this.Resources["GeneratedLabel"];
+                        Grid.SetRow(label, x);
+                        Grid.SetColumn(label, 2);
+                        CarsGrid.Children.Add(label);
 
                         x++;
                     }

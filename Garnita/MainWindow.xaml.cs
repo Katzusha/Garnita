@@ -1350,15 +1350,10 @@ namespace Garnita
                     // Read the rows of the result set
                     while (reader.Read())
                     {
-                        ColorPrimaryInput.Text = reader.GetString(1).ToString();
-                        ColorSecondaryinput.Text = reader.GetString(2).ToString();
-                        ColorBackgroundInput.Text = reader.GetString(3).ToString();
-                        ColorFontinput.Text = reader.GetString(4).ToString();
-
-                        ColorPrimaryInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorPrimaryInput.Text);
-                        ColorSecondaryInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorSecondaryinput.Text);
-                        ColorBackgroundInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorBackgroundInput.Text);
-                        ColorFontInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorFontinput.Text);
+                        ColorPrimaryInput.SelectedColor = (Color)ColorConverter.ConvertFromString("#" + reader.GetString(1));
+                        ColorSecondaryInput.SelectedColor = (Color)ColorConverter.ConvertFromString("#" + reader.GetString(2));
+                        ColorBackgroundInput.SelectedColor = (Color)ColorConverter.ConvertFromString("#" + reader.GetString(3));
+                        ColorFontInput.SelectedColor = (Color)ColorConverter.ConvertFromString("#" + reader.GetString(4));
                     }
                 }
 
@@ -1388,8 +1383,8 @@ namespace Garnita
 
                 ComboBoxItem item = (ComboBoxItem)CarGarageInput.SelectedItem;
 
-                string strquery = ("SELECT editdesign('" + ColorPrimaryInput.Text + "', '" + ColorSecondaryinput.Text + "', '" + ColorBackgroundInput.Text + 
-                    "', '" + ColorFontinput.Text + "')");
+                string strquery = ("SELECT editdesign('" + ColorPrimaryInput.SelectedColor.ToString().Replace("#FF", "") + "', '" + ColorSecondaryInput.SelectedColor.ToString().Replace("#FF", "") + "', '" + ColorBackgroundInput.SelectedColor.ToString().Replace("#FF", "") + 
+                    "', '" + ColorFontInput.SelectedColor.ToString().Replace("#FF", "") + "')");
                 NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
 
                 if ((Int32)cmd.ExecuteScalar() == 1)
@@ -1422,42 +1417,6 @@ namespace Garnita
         {
             ErrorWindow.Visibility = Visibility.Hidden;
             ErrorMessage.Text = "ErrorMessage";
-        }
-
-        private void ColorPrimaryInput_KeyUp(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                ColorPrimaryInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorPrimaryInput.Text);
-            }
-            catch { }
-        }
-
-        private void ColorSecondaryinput_KeyUp(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                ColorSecondaryInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorSecondaryinput.Text);
-            }
-            catch { }
-        }
-
-        private void ColorBackgroundInput_KeyUp(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                ColorBackgroundInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorBackgroundInput.Text);
-            }
-            catch { }
-        }
-
-        private void ColorFontinput_KeyUp(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                ColorFontInputChecker.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#" + ColorFontinput.Text);
-            }
-            catch { }
         }
     }
 }

@@ -4,18 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Garnita"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="871" Width="1286" Background="#3E2D2D"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Window.Resources>
         <Color x:Key="SecondaryColor">#3e3e3e</Color>
+        <SolidColorBrush x:Key="SecondaryBrush" Color="#3e3e3e"/>
         <SolidColorBrush x:Key="PrimaryColor" Color="#5656FF"/>
         <SolidColorBrush x:Key="FontColor" Color="#FFFFFF"/>
 
 
         <Style x:Key="Textbox" TargetType="TextBox">
             <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
-            <Setter Property="Background" Value="#5A4261"/>
+            <Setter Property="Background" Value="#5a4261"/>
             <Setter Property="Height" Value="50"/>
             <Setter Property="Width" Value="450"/>
             <Setter Property="FontSize" Value="24"/>
@@ -117,7 +119,8 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#766776" />
+                    <Setter Property="Background" Value="#766776"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -194,7 +197,7 @@
         </Style>
 
         <ControlTemplate x:Key="DatePickerTemplate1" TargetType="{x:Type DatePicker}">
-            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+            <Border Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Padding="{TemplateBinding Padding}">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal"/>
@@ -207,6 +210,9 @@
                 </VisualStateManager.VisualStateGroups>
                 <Grid Width="450" Height="50" x:Name="PART_Root" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                     <Grid.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
                         <SolidColorBrush x:Key="DisabledBrush" Color="#A5FFFFFF"/>
                         <ControlTemplate x:Key="DropDownButtonTemplate" TargetType="{x:Type Button}">
                             <Grid>
@@ -257,7 +263,7 @@
                                         <VisualState x:Name="Disabled"/>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <Grid Background="#11FFFFFF" FlowDirection="LeftToRight" HorizontalAlignment="Center" Height="18" Margin="0" VerticalAlignment="Center" Width="19">
+                                <Grid Background="#11FFFFFF" FlowDirection="LeftToRight" HorizontalAlignment="Center" Height="40" Margin="0" VerticalAlignment="Center" Width="40">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="20*"/>
                                         <ColumnDefinition Width="20*"/>
@@ -271,7 +277,7 @@
                                         <RowDefinition Height="19*"/>
                                     </Grid.RowDefinitions>
                                     <Border x:Name="Highlight" BorderBrush="#FF45D6FA" BorderThickness="1" CornerRadius="0,0,1,1" Grid.ColumnSpan="4" Margin="-1" Opacity="0" Grid.RowSpan="4" Grid.Row="0"/>
-                                    <Border x:Name="Background" Background="#FF1F3B53" BorderBrush="#FFFFFFFF" BorderThickness="1" CornerRadius=".5" Grid.ColumnSpan="4" Margin="0,-1,0,0" Opacity="1" Grid.RowSpan="3" Grid.Row="1"/>
+                                    <Border x:Name="Background" Background="Transparent" BorderBrush="#FFFFFFFF" BorderThickness="1" CornerRadius=".5" Grid.ColumnSpan="4" Margin="0,-1,0,0" Opacity="1" Grid.RowSpan="3" Grid.Row="1"/>
                                     <Border x:Name="BackgroundGradient" BorderBrush="#BF000000" BorderThickness="1" CornerRadius=".5" Grid.ColumnSpan="4" Margin="0,-1,0,0" Opacity="1" Grid.RowSpan="3" Grid.Row="1">
                                         <Border.Background>
                                             <LinearGradientBrush EndPoint=".7,1" StartPoint=".7,0">
@@ -308,14 +314,20 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="PART_Button" Grid.Column="1" Foreground="{TemplateBinding Foreground}" Focusable="False" HorizontalAlignment="Left" Margin="3,0,3,0" Grid.Row="0" Template="{StaticResource DropDownButtonTemplate}" VerticalAlignment="Top" Width="50" Height="50"/>
-                    <DatePickerTextBox x:Name="PART_TextBox" Grid.Column="0" Focusable="{TemplateBinding Focusable}" HorizontalContentAlignment="Center" Grid.Row="0" VerticalContentAlignment="Center"/>
+                    <DatePickerTextBox x:Name="PART_TextBox" BorderBrush="#454545" Grid.Column="0" Focusable="{TemplateBinding Focusable}" Background="{DynamicResource SecondaryBrush}" Foreground="{DynamicResource FontColor}" HorizontalContentAlignment="Center" Grid.Row="0" VerticalContentAlignment="Center">
+                        <DatePickerTextBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </DatePickerTextBox.Resources>
+                    </DatePickerTextBox>
                     <Grid x:Name="PART_DisabledVisual" Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="False" Opacity="0" Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Fill="#A5FFFFFF" Grid.Row="0" RadiusX="1" RadiusY="1"/>
-                        <Rectangle Grid.Column="1" Fill="#A5FFFFFF" Height="18" Margin="3,0,3,0" Grid.Row="0" RadiusX="1" RadiusY="1" Width="19"/>
+                        <Rectangle Grid.Column="0" Fill="Transparent" Grid.Row="0" RadiusX="1" RadiusY="1"/>
+                        <Rectangle Grid.Column="1" Fill="#FFFFFF" Height="50" Margin="3,0,3,0" Grid.Row="0" RadiusX="1" RadiusY="1" Width="50"/>
                         <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_TextBox}" StaysOpen="False"/>
                     </Grid>
                 </Grid>
@@ -354,12 +366,12 @@
             </Setter>
         </Style>
         <LinearGradientBrush x:Key="ComboBox.Static.Background" EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="#FFFFFF" Offset="0.0"/>
-            <GradientStop Color="#FFE5E5E5" Offset="1.0"/>
+            <GradientStop Color="{DynamicResource SecondaryColor}" Offset="0.0"/>
+            <GradientStop Color="{DynamicResource SecondaryColor}" Offset="1.0"/>
         </LinearGradientBrush>
-        <SolidColorBrush x:Key="ComboBox.Static.Border" Color="#FFACACAC"/>
-        <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="#FF606060"/>
-        <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Border" Color="Transparent"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="{DynamicResource SecondaryColor}"/>
         <SolidColorBrush x:Key="ComboBox.Static.Editable.Border" Color="#FFABADB3"/>
         <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Background" Color="Transparent"/>
         <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Border" Color="Transparent"/>
@@ -686,11 +698,11 @@
             <Button Grid.Row="2" x:Name="CarsButton" Content="Cars" Style="{DynamicResource ContextButton}" HorizontalAlignment="Left" Margin="130, 0, 0, 0" Click="CarsButton_Click"/>
         </Grid>
 
-        <Grid x:Name="CreateRentScreen" Visibility="Hidden">
-            <ComboBox x:Name="RentUserInput" Height="50" Width="450" Margin="-500, -200, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+        <Grid x:Name="CreateRentScreen" Visibility="Visible">
+            <ComboBox x:Name="RentUserInput" Height="50" Width="450" Margin="-500, -200, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Template="{DynamicResource ComboBoxTemplate}"/>
             <Label Style="{DynamicResource Label}" x:Name="RentUserLabel" Content="User :" Margin="-500, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <ComboBox x:Name="RentCarInput" Height="50" Width="450" Margin="0, -200, -500, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+            <ComboBox x:Name="RentCarInput" Height="50" Width="450" Margin="0, -200, -500, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Template="{DynamicResource ComboBoxTemplate}"/>
             <Label Style="{DynamicResource Label}" x:Name="RentCarLabel" Content="Car :" Margin="0, -280, -500, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
             <DatePicker x:Name="RentFromDateInput" Template="{DynamicResource DatePickerTemplate1}" Style="{DynamicResource DatePicker}" Margin="-500, 0, 0, 0"/>
@@ -758,21 +770,16 @@
         </Grid>
 
         <Grid x:Name="ColorScreen" Visibility="Visible">
-
-            <Border x:Name="ColorPrimaryInputChecker" Height="50" Width="50" CornerRadius="10" Margin="-550, -400, 0, 0" Background="#FFFFFF" BorderBrush="#AFAFAF" BorderThickness="2"/>
-            <TextBox x:Name="ColorPrimaryInput" Style="{DynamicResource Textbox}" Margin="0, -400, 0, 0" KeyUp="ColorPrimaryInput_KeyUp"/>
+            <xctk:ColorPicker x:Name="ColorPrimaryInput" Height="50" Width="450" Margin="0, -400, 0, 0" Background="Transparent"/>
             <Label Style="{DynamicResource Label}" x:Name="ColorPrimaryLabel" Content="Primary color :" Margin="0, -480, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <Border x:Name="ColorSecondaryInputChecker" Height="50" Width="50" CornerRadius="10" Margin="-550, -200, 0, 0" Background="#FFFFFF" BorderBrush="#AFAFAF" BorderThickness="2"/>
-            <TextBox x:Name="ColorSecondaryinput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0" KeyUp="ColorSecondaryinput_KeyUp"/>
+            <xctk:ColorPicker x:Name="ColorSecondaryInput" Height="50" Width="450" Margin="0, -200, 0, 0" Background="Transparent"/>
             <Label Style="{DynamicResource Label}" x:Name="ColorSecondaryLabel" Content="Secondary color :" Margin="0, -280, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <Border x:Name="ColorBackgroundInputChecker" Height="50" Width="50" CornerRadius="10" Margin="-550, 0, 0, 0" Background="#FFFFFF" BorderBrush="#AFAFAF" BorderThickness="2"/>
-            <TextBox x:Name="ColorBackgroundInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, 0" KeyUp="ColorBackgroundInput_KeyUp"/>
+            <xctk:ColorPicker x:Name="ColorBackgroundInput" Height="50" Width="450" Margin="0, 0, 0, 0" Background="Transparent"/>
             <Label Style="{DynamicResource Label}" x:Name="ColorbackgroundLabel" Content="Background color :" Margin="0, -80, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <Border x:Name="ColorFontInputChecker" Height="50" Width="50" CornerRadius="10" Margin="-550, 0, 0, -200" Background="#FFFFFF" BorderBrush="#AFAFAF" BorderThickness="2"/>
-            <TextBox x:Name="ColorFontinput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, -200" KeyUp="ColorFontinput_KeyUp"/>
+            <xctk:ColorPicker x:Name="ColorFontInput" Height="50" Width="450" Margin="0, 0, 0, -200" Background="Transparent" DropDownBackground="{DynamicResource SecondaryBrush}" Foreground="{DynamicResource FontColor}" HeaderForeground="{DynamicResource FontColor}"/>
             <Label Style="{DynamicResource Label}" x:Name="colorFontLabel" Content="Text color :" Margin="0, 0, 0, -120" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
             
             <Button Content="Save" x:Name="SaveColorButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="SaveColorButton_Click"/>

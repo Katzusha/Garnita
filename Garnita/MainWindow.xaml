@@ -18,7 +18,6 @@
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="IsHitTestVisible" Value="False"/>
         </Style>
 
@@ -41,7 +40,7 @@
                             <Border.BorderBrush>
                                 <SolidColorBrush Color="Transparent" />
                             </Border.BorderBrush>
-                            <ScrollViewer Margin="20, 0, 20, 0" x:Name="PART_ContentHost" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="450"/>
+                            <ScrollViewer Margin="0, 0, 0, 0" x:Name="PART_ContentHost" MinHeight="50" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="450"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -639,7 +638,7 @@
             <Button Grid.Row="0" x:Name="ChangeColorbutton" Content="Color" Style="{DynamicResource ContextButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="ChangeColorbutton_Click"/>
 
             <Border Background="Transparent" Height="50" Grid.Row="1" Margin="25, 0, 25, 0" VerticalAlignment="Top">
-                <Grid>
+                <Grid ShowGridLines="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -657,7 +656,7 @@
                 </Grid>
             </Border>
             
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="25, 50, 25, 0">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="25, 50, 25, 0">
                 <Grid>
                     <Grid x:Name="RentsGrid">
                         <Grid.ColumnDefinitions>
@@ -692,6 +691,21 @@
             <Button Content="Create" x:Name="CreateRentButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateRentButton_Click"/>
 
             <Button Content="Cancel" x:Name="CancelRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelRentButton_Click"/>
+
+            <Button Content="End rent" x:Name="EndRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="EndRentButton_Click"/>
+        </Grid>
+        
+        <Grid x:Name="EndRentScreen" Visibility="Hidden">
+            <TextBox x:Name="RentKilometersMadeInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
+            <Label Style="{DynamicResource Label}" x:Name="RentKilometersMadeLabel" Content="Kilometers made :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+
+            <TextBox x:Name="RentCommentInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, -200" Height="250" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+            <Label Style="{DynamicResource Label}" x:Name="RentCommentLabel" Content="Comment :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+            <Button Content="End" x:Name="ConfirmEndRentButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="ConfirmEndRentButton_Click"/>
+
+            <Button Content="Cancel" x:Name="CancelEndRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelEndRentButton_Click"/>
         </Grid>
 
         <Grid x:Name="GarageScreen" Visibility="Hidden">
@@ -702,7 +716,7 @@
             <Button x:Name="GarageBackButton" Style="{DynamicResource ContextButton}" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="GarageBackButton_Click"/>
 
             <Border Background="Transparent" Margin="25, 90, 25, 0" Height="50" VerticalAlignment="Top">
-                <Grid>
+                <Grid ShowGridLines="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -714,7 +728,7 @@
                 </Grid>
             </Border>
 
-            <ScrollViewer Margin="25, 150, 25, 25" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="25, 150, 25, 25" VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="GaragesGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -736,7 +750,7 @@
             <Button Content="Cancel" x:Name="CancelGarageButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelGarageButton_Click"/>
         </Grid>
 
-        <Grid x:Name="CarScreen" Visibility="Visible">
+        <Grid x:Name="CarScreen" Visibility="Hidden">
             <Label  x:Name="CarLabel" Content="Cars" Style="{DynamicResource Label}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25"/>
 
             <Button x:Name="AddCarButton" Style="{DynamicResource ContextButton}" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130, 25, 25, 25" Click="AddCarButton_Click"/>
@@ -744,7 +758,7 @@
             <Button x:Name="CarBackButton" Style="{DynamicResource ContextButton}" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="CarBackButton_Click"/>
 
             <Border Background="Transparent" Margin="25, 90, 25, 0" Height="50" VerticalAlignment="Top">
-                <Grid>
+                <Grid ShowGridLines="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -759,7 +773,7 @@
                 </Grid>
             </Border>
 
-            <ScrollViewer Margin="25, 150, 25, 25" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="25, 150, 25, 25" VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="CarsGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -770,7 +784,7 @@
             </ScrollViewer>
         </Grid>
 
-        <Grid x:Name="CreateCarScreen" Visibility="Hidden">
+        <Grid x:Name="CreateCarScreen" Visibility="Visible">
             <TextBox x:Name="CarNameInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
             <Label Style="{DynamicResource Label}" x:Name="CarNameLabel" Content="Name :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
@@ -779,6 +793,9 @@
 
             <ComboBox x:Name="CarGarageInput" Height="50" Width="450" Margin="0, 0, 0, -200" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
             <Label Style="{DynamicResource Label}" x:Name="CarGarageLabel" Content="Garage :" Margin="0, 0, 0, -120"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+            <TextBox x:Name="CarKilometersInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, -400"/>
+            <Label Style="{DynamicResource Label}" x:Name="CarKilometersLabel" Content="Kilometers :" Margin="0, 0, 0, -320"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
             <Button Content="Create" x:Name="CreateCarButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateCarButton_Click"/>
 

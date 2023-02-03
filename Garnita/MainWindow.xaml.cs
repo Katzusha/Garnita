@@ -186,6 +186,8 @@ namespace Garnita
             CreateCarScreen.Visibility = Visibility.Hidden;
             ErrorWindow.Visibility = Visibility.Hidden;
             ColorScreen.Visibility = Visibility.Hidden;
+            EndRentScreen.Visibility = Visibility.Hidden;
+            EndRentButton.Visibility = Visibility.Hidden;
 
             RentFromDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today.AddDays(-1)));
             RentToDateInput.BlackoutDates.Add(new CalendarDateRange(new DateTime(1900, 1, 1), DateTime.Today.AddDays(-1)));
@@ -384,6 +386,7 @@ namespace Garnita
         {
             RentScreen.Visibility = Visibility.Hidden;
             CreateRentScreen.Visibility = Visibility.Visible;
+            EndRentButton.Visibility = Visibility.Visible;
 
             Button btn = (Button)sender;
 
@@ -695,6 +698,8 @@ namespace Garnita
                     }
 
                     conn.Close();
+
+                    EndRentButton.Visibility = Visibility.Hidden;
                 }
                 catch (Exception ex)
                 {
@@ -707,6 +712,7 @@ namespace Garnita
 
         private void CancelRentButton_Click(object sender, RoutedEventArgs e)
         {
+           
             RentUserInput.SelectedIndex = -1;
             RentUserInput.Items.Clear();
             RentCarInput.SelectedIndex = -1;
@@ -718,6 +724,7 @@ namespace Garnita
             GenerateRents();
 
             CreateRentButton.Content = "Create";
+            EndRentButton.Visibility = Visibility.Hidden;
             ModifiedRent = 0;
         }
 
@@ -1302,7 +1309,7 @@ namespace Garnita
 
                     conn.Open();
 
-                    string strquery = ("SELECT createcar ('" + CarNameInput.Text + "', '" + CarLicenceplateInput.Text + "', '" + item.Name.ToString().Replace("GarageId", "") + "')");
+                    string strquery = ("SELECT createcar ('" + CarNameInput.Text + "', '" + CarLicenceplateInput.Text + "', '" + item.Name.ToString().Replace("GarageId", "") + "', '" + CarKilometersInput.Text + "')");
                     NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
 
                     if ((Int32)cmd.ExecuteScalar() == 1)
@@ -1479,6 +1486,67 @@ namespace Garnita
         {
             ErrorWindow.Visibility = Visibility.Hidden;
             ErrorMessage.Text = "ErrorMessage";
+        }
+
+        private void EndRentButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateRentScreen.Visibility = Visibility.Hidden;
+            EndRentScreen.Visibility = Visibility.Visible;
+        }
+
+        private void CancelEndRentButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateRentScreen.Visibility = Visibility.Visible;
+            EndRentScreen.Visibility = Visibility.Hidden;
+        }
+
+        private void ConfirmEndRentButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                conn.Open();
+
+                string strquery = ("SELECT confirmrent('" + ModifiedRent.ToString() + "', '" + RentKilometersMadeInput.Text + "', '" + RentCommentInput.Text + "');");
+
+                NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
+
+                if ((Int32)cmd.ExecuteScalar() == 1)
+                {
+                    RentUserInput.SelectedIndex = -1;
+                    RentUserInput.Items.Clear();
+                    RentCarInput.SelectedIndex = -1;
+                    RentCarInput.Items.Clear();
+
+                    RentFromDateInput.SelectedDate = DateTime.Now;
+                    RentToDateInput.SelectedDate = DateTime.Now;
+
+                    conn.Close();
+
+                    EndRentScreen.Visibility = Visibility.Hidden;
+
+                    GenerateRents();
+                }
+                else if ((Int32)cmd.ExecuteScalar() == 0)
+                {
+                    RentUserInput.SelectedIndex = -1;
+                    RentUserInput.Items.Clear();
+                    RentCarInput.SelectedIndex = -1;
+                    RentCarInput.Items.Clear();
+
+                    RentFromDateInput.SelectedDate = DateTime.Now;
+                    RentToDateInput.SelectedDate = DateTime.Now;
+
+                    MessageBox.Show("Wrong input. Please try again!");
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+
+                DisplayError(ex.Message);
+            }
         }
     }
 }

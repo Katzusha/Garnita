@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Garnita"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="871" Width="1286" Background="#3E2D2D"
+        Title="MainWindow" Height="871" Width="1286" Background="#3E2D2D" WindowStyle="None"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Window.Resources>
         <Color x:Key="SecondaryColor">#3e3e3e</Color>
@@ -568,264 +568,281 @@
         <SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="#FFBCBCBC"/>
         <SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#FF707070"/>
     </Window.Resources>
-    
+
     <Grid>
-        <Grid x:Name="LoginScreen" Height="400" Width="500" Visibility="Hidden">
-            <TextBox x:Name="UsernameInput" Style="{DynamicResource Textbox}" Margin="0, -100, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="UsernameLabel" Content="Username :" Margin="0, -180, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-            <PasswordBox x:Name="PasswordInput" Margin="0, 0, 0, -100" Style="{DynamicResource PasswordBox}"/>
-            <Label Style="{DynamicResource Label}" x:Name="PasswordLabel" Content="Password :" Margin="0, 0, 0, -20"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+        <Border Background="#2e2e2e" MouseDown="Border_MouseDown">
+            <Grid>
+                <Button Style="{DynamicResource FalseButton}" Width="80" Height="30" Content="Log out" HorizontalAlignment="Left" FontSize="20" Margin="10, 0, 0, 0" Click="Button_Click_3"/>
 
-            <Button x:Name="LogInButton" Content="Log in" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="LogInButton_Click"/>
-            <Button x:Name="CanselLoginButton" Content="Exit" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CanselLoginButton_Click"/>
+                <Button Style="{DynamicResource FalseButton}" Width="30" Height="30" Content="❌" HorizontalAlignment="Right" FontSize="20" Click="Button_Click" Margin="0, 0, 10, 0"/>
+                <Button Style="{DynamicResource ContextButton}" Width="30" Height="30" Content="⬛" HorizontalAlignment="Right" FontSize="20" Margin="0, 0, 50, 0" Click="Button_Click_1"/>
+                <Button Style="{DynamicResource ContextButton}" Width="30" Height="30" Content="—" HorizontalAlignment="Right" FontSize="20" Margin="0, 0, 90, 0" Click="Button_Click_2"/>
+            </Grid>
+        </Border>
 
-            <Label  x:Name="RegisterButton" Cursor="Hand" Content="Register ?" Style="{DynamicResource Label}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25, 25, 25, 50" MouseLeftButtonDown="RegisterButton_MouseLeftButtonDown"/>
-            <Label  x:Name="ForgotPassword" Cursor="Hand" Content="Forgot password ?" Style="{DynamicResource Label}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25, 25, 25, 0" MouseLeftButtonDown="ForgotPassword_MouseLeftButtonDown"/>
-        </Grid>
+        <Grid Grid.Row="1">
+            <Grid x:Name="LoginScreen" Height="400" Width="500" Visibility="Hidden">
+                <TextBox x:Name="UsernameInput" Style="{DynamicResource Textbox}" Margin="0, -100, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="UsernameLabel" Content="Username :" Margin="0, -180, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-        <Grid x:Name="ForgotenPasswordScreen" Visibility="Hidden">
-            <TextBox x:Name="ForgotEmailInput" Style="{DynamicResource Textbox}" Margin="0, -400, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="ForgotEmailLabel" Content="Email :" Margin="0, -480, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                <PasswordBox x:Name="PasswordInput" Margin="0, 0, 0, -100" Style="{DynamicResource PasswordBox}"/>
+                <Label Style="{DynamicResource Label}" x:Name="PasswordLabel" Content="Password :" Margin="0, 0, 0, -20"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <TextBox x:Name="ForgotUsernameInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="ForgotUsernameLabel" Content="Username :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                <Button x:Name="LogInButton" Content="Log in" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="LogInButton_Click"/>
+                <Button x:Name="CanselLoginButton" Content="Exit" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CanselLoginButton_Click"/>
 
-            <TextBox x:Name="ForgotPasswordInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="ForgotPasswordLabel" Content="New password :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                <Label  x:Name="RegisterButton" Cursor="Hand" Content="Register ?" Style="{DynamicResource Label}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25, 25, 25, 50" MouseLeftButtonDown="RegisterButton_MouseLeftButtonDown"/>
+                <Label  x:Name="ForgotPassword" Cursor="Hand" Content="Forgot password ?" Style="{DynamicResource Label}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25, 25, 25, 0" MouseLeftButtonDown="ForgotPassword_MouseLeftButtonDown"/>
+            </Grid>
 
-            <PasswordBox x:Name="ForgotPasswordInputTest" Style="{DynamicResource PasswordBox}" Margin="0, 0, 0, -200"/>
-            <Label Style="{DynamicResource Label}" x:Name="ForgotPasswordTestLabel" Content="Re-enter new password :" Margin="0, 0, 0, -120"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+            <Grid x:Name="ForgotenPasswordScreen" Visibility="Hidden">
+                <TextBox x:Name="ForgotEmailInput" Style="{DynamicResource Textbox}" Margin="0, -400, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="ForgotEmailLabel" Content="Email :" Margin="0, -480, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <Button Content="Confirm" x:Name="ConfirmForgotPasswordButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="ConfirmForgotPasswordButton_Click"/>
+                <TextBox x:Name="ForgotUsernameInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="ForgotUsernameLabel" Content="Username :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <Button Content="Cancel" x:Name="CancelForgotPasswordButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelForgotPasswordButton_Click"/>
-        </Grid>
+                <TextBox x:Name="ForgotPasswordInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="ForgotPasswordLabel" Content="New password :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-        <Grid x:Name="RegisterScreen" Visibility="Hidden">
-            <TextBox Style="{DynamicResource Textbox}" Margin="0, -600, 0, 0" x:Name="RegisterFirstnameInput"/>
-            <Label Style="{DynamicResource Label}" x:Name="FirstnameLabel" Content="Firstname :" Margin="0, -680, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                <PasswordBox x:Name="ForgotPasswordInputTest" Style="{DynamicResource PasswordBox}" Margin="0, 0, 0, -200"/>
+                <Label Style="{DynamicResource Label}" x:Name="ForgotPasswordTestLabel" Content="Re-enter new password :" Margin="0, 0, 0, -120"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <TextBox Style="{DynamicResource Textbox}" Margin="0, -400, 0, 0" x:Name="RegisterSurnameInput"/>
-            <Label Style="{DynamicResource Label}" x:Name="SurnameLabel" Content="Surname :" Margin="0, -480, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                <Button Content="Confirm" x:Name="ConfirmForgotPasswordButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="ConfirmForgotPasswordButton_Click"/>
 
-            <DatePicker x:Name="RegisterBirthInput" Template="{DynamicResource DatePickerTemplate1}" Style="{DynamicResource DatePicker}" Margin="0, -200, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="BirthLabel" Content="Birth :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                <Button Content="Cancel" x:Name="CancelForgotPasswordButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelForgotPasswordButton_Click"/>
+            </Grid>
 
-            <TextBox Style="{DynamicResource Textbox}" Margin="0, 0, 0, 0" x:Name="RegisterEmailInput"/>
-            <Label Style="{DynamicResource Label}" x:Name="EmailLabel" Content="eMail :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+            <Grid x:Name="RegisterScreen" Visibility="Hidden">
+                <TextBox Style="{DynamicResource Textbox}" Margin="0, -600, 0, 0" x:Name="RegisterFirstnameInput"/>
+                <Label Style="{DynamicResource Label}" x:Name="FirstnameLabel" Content="Firstname :" Margin="0, -680, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <TextBox Style="{DynamicResource Textbox}" Margin="0, 0, 0, -200" x:Name="RegisterUsernameInput"/>
-            <Label Style="{DynamicResource Label}" x:Name="RegisterUsernameLabel" Content="Username :" Margin="0, 0, 0, -120"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                <TextBox Style="{DynamicResource Textbox}" Margin="0, -400, 0, 0" x:Name="RegisterSurnameInput"/>
+                <Label Style="{DynamicResource Label}" x:Name="SurnameLabel" Content="Surname :" Margin="0, -480, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <TextBox Style="{DynamicResource Textbox}" Margin="0, 0, 0, -400" x:Name="RegisterPasswordInput"/>
-            <Label Style="{DynamicResource Label}" x:Name="RegisterPasswordLabel" Content="Password :" Margin="0, 0, 0, -320"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                <DatePicker x:Name="RegisterBirthInput" Template="{DynamicResource DatePickerTemplate1}" Style="{DynamicResource DatePicker}" Margin="0, -200, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="BirthLabel" Content="Birth :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <Button Content="Create" x:Name="CreateUserButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateUserButton_Click"/>
+                <TextBox Style="{DynamicResource Textbox}" Margin="0, 0, 0, 0" x:Name="RegisterEmailInput"/>
+                <Label Style="{DynamicResource Label}" x:Name="EmailLabel" Content="eMail :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <Button Content="Cancel" x:Name="CanselCreateUserButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CanselCreateUserButton_Click"/>
-        </Grid>
+                <TextBox Style="{DynamicResource Textbox}" Margin="0, 0, 0, -200" x:Name="RegisterUsernameInput"/>
+                <Label Style="{DynamicResource Label}" x:Name="RegisterUsernameLabel" Content="Username :" Margin="0, 0, 0, -120"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-        <Grid x:Name="RentScreen" Visibility="Hidden">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="90px"/>
-                <RowDefinition/>
-                <RowDefinition Height="90px"/>
-            </Grid.RowDefinitions>
+                <TextBox Style="{DynamicResource Textbox}" Margin="0, 0, 0, -400" x:Name="RegisterPasswordInput"/>
+                <Label Style="{DynamicResource Label}" x:Name="RegisterPasswordLabel" Content="Password :" Margin="0, 0, 0, -320"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 
-            <Button Grid.Row="0" x:Name="AddRentButton" Content="Add" Style="{DynamicResource ContextButton}" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Click="AddRentButton_Click"/>
+                <Button Content="Create" x:Name="CreateUserButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateUserButton_Click"/>
 
-            <Button Grid.Row="0" x:Name="ChangeColorbutton" Content="Color" Style="{DynamicResource ContextButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="ChangeColorbutton_Click"/>
+                <Button Content="Cancel" x:Name="CanselCreateUserButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CanselCreateUserButton_Click"/>
+            </Grid>
 
-            <Border Background="Transparent" Height="50" Grid.Row="1" Margin="25, 0, 25, 0" VerticalAlignment="Top">
-                <Grid ShowGridLines="True">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+            <Grid x:Name="RentScreen" Visibility="Hidden">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="90px"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="90px"/>
+                </Grid.RowDefinitions>
 
-                    <Label Style="{DynamicResource Label}" Content="Name" HorizontalAlignment="Center"/>
+                <Button Grid.Row="0" x:Name="AddRentButton" Content="Add" Style="{DynamicResource ContextButton}" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Click="AddRentButton_Click"/>
 
-                    <Label Style="{DynamicResource Label}" Content="From date" HorizontalAlignment="Center" Grid.Column="1"/>
-                    
-                    <Label Style="{DynamicResource Label}" Content="To date" HorizontalAlignment="Center" Grid.Column="2"/>
+                <Button Grid.Row="0" x:Name="ChangeColorbutton" Content="Color" Style="{DynamicResource ContextButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="ChangeColorbutton_Click"/>
 
-                    <Label Style="{DynamicResource Label}" Content="Car model" HorizontalAlignment="Center" Grid.Column="3"/>
-                </Grid>
-            </Border>
-            
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="25, 50, 25, 0">
-                <Grid>
-                    <Grid x:Name="RentsGrid">
+                <Border Background="Transparent" Height="50" Grid.Row="1" Margin="25, 0, 25, 0" VerticalAlignment="Top">
+                    <Grid ShowGridLines="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
+
+                        <Label Style="{DynamicResource Label}" Content="Name" HorizontalAlignment="Center"/>
+
+                        <Label Style="{DynamicResource Label}" Content="From date" HorizontalAlignment="Center" Grid.Column="1"/>
+
+                        <Label Style="{DynamicResource Label}" Content="To date" HorizontalAlignment="Center" Grid.Column="2"/>
+
+                        <Label Style="{DynamicResource Label}" Content="Car model" HorizontalAlignment="Center" Grid.Column="3"/>
                     </Grid>
+                </Border>
 
-                </Grid>
-            </ScrollViewer>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="25, 50, 25, 0">
+                    <Grid>
+                        <Grid x:Name="RentsGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
 
-            <Button Grid.Row="2" x:Name="GarageButton" Content="Garages" Style="{DynamicResource ContextButton}" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Click="GarageButton_Click"/>
+                    </Grid>
+                </ScrollViewer>
 
-            <Button Grid.Row="2" x:Name="CarsButton" Content="Cars" Style="{DynamicResource ContextButton}" HorizontalAlignment="Left" Margin="130, 0, 0, 0" Click="CarsButton_Click"/>
-        </Grid>
+                <Button Grid.Row="2" x:Name="GarageButton" Content="Garages" Style="{DynamicResource ContextButton}" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Click="GarageButton_Click"/>
 
-        <Grid x:Name="CreateRentScreen" Visibility="Hidden">
-            <ComboBox x:Name="RentUserInput" Height="50" Width="450" Cursor="Hand" Foreground="{DynamicResource FontColor}" Margin="-500, -200, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-            <Label Style="{DynamicResource Label}" x:Name="RentUserLabel" Content="User :" Margin="-500, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <ComboBox x:Name="RentCarInput" Height="50" Cursor="Hand" Width="450" Foreground="{DynamicResource FontColor}" Margin="0, -200, -500, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-            <Label Style="{DynamicResource Label}" x:Name="RentCarLabel" Content="Car :" Margin="0, -280, -500, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <DatePicker x:Name="RentFromDateInput" Foreground="{DynamicResource FontColor}" Template="{DynamicResource DatePickerTemplate1}" Style="{DynamicResource DatePicker}" Margin="-500, 0, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="RentFromDateLabel" Content="Form date :" Margin="-500, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <DatePicker x:Name="RentToDateInput" Foreground="{DynamicResource FontColor}" Template="{DynamicResource DatePickerTemplate1}" Style="{DynamicResource DatePicker}" Margin="0, 0, -500, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="RentToDateLabel" Content="To date :" Margin="0, -80, -500, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <Button Content="Create" x:Name="CreateRentButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateRentButton_Click"/>
-
-            <Button Content="Cancel" x:Name="CancelRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelRentButton_Click"/>
-
-            <Button Content="End rent" x:Name="EndRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="EndRentButton_Click"/>
-        </Grid>
-        
-        <Grid x:Name="EndRentScreen" Visibility="Hidden">
-            <TextBox x:Name="RentKilometersMadeInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="RentKilometersMadeLabel" Content="Kilometers made :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-
-            <TextBox x:Name="RentCommentInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, -200" Height="250" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
-            <Label Style="{DynamicResource Label}" x:Name="RentCommentLabel" Content="Comment :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <Button Content="End" x:Name="ConfirmEndRentButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="ConfirmEndRentButton_Click"/>
-
-            <Button Content="Cancel" x:Name="CancelEndRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelEndRentButton_Click"/>
-        </Grid>
-
-        <Grid x:Name="GarageScreen" Visibility="Hidden">
-            <Label Style="{DynamicResource Label}" x:Name="GarageLabel" Content="Garages" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25"/>
-
-            <Button x:Name="AddGarageButton" Style="{DynamicResource ContextButton}" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130, 25, 25, 25" Click="AddGarageButton_Click"/>
-
-            <Button x:Name="GarageBackButton" Style="{DynamicResource ContextButton}" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="GarageBackButton_Click"/>
-
-            <Border Background="Transparent" Margin="25, 90, 25, 0" Height="50" VerticalAlignment="Top">
-                <Grid ShowGridLines="True">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Style="{DynamicResource Label}" Content="Name" HorizontalAlignment="Center"/>
-                    
-                    <Label Style="{DynamicResource Label}" Content="City" HorizontalAlignment="Center" Grid.Column="1"/>
-                </Grid>
-            </Border>
-
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="25, 150, 25, 25" VerticalScrollBarVisibility="Auto">
-                <Grid x:Name="GaragesGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </ScrollViewer>
-        </Grid>
-
-        <Grid x:Name="CreateGarageScreen" Visibility="Hidden">
-            <TextBox x:Name="GarageNameINput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="GarageNameLabel" Content="Name :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <ComboBox x:Name="GarageCityInput" Height="50" Width="450" Margin="0, 0, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-            <Label Style="{DynamicResource Label}" x:Name="GarageCityLabel" Content="City :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <Button Content="Create" x:Name="CreateGarageButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateGarageButton_Click"/>
-
-            <Button Content="Cancel" x:Name="CancelGarageButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelGarageButton_Click"/>
-        </Grid>
-
-        <Grid x:Name="CarScreen" Visibility="Hidden">
-            <Label  x:Name="CarLabel" Content="Cars" Style="{DynamicResource Label}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25"/>
-
-            <Button x:Name="AddCarButton" Style="{DynamicResource ContextButton}" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130, 25, 25, 25" Click="AddCarButton_Click"/>
-
-            <Button x:Name="CarBackButton" Style="{DynamicResource ContextButton}" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="CarBackButton_Click"/>
-
-            <Border Background="Transparent" Margin="25, 90, 25, 0" Height="50" VerticalAlignment="Top">
-                <Grid ShowGridLines="True">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Style="{DynamicResource Label}" Content="Car model" HorizontalAlignment="Center"/>
-
-                    <Label Style="{DynamicResource Label}" Content="Licence plate" HorizontalAlignment="Center" Grid.Column="1"/>
-                    
-                    <Label Style="{DynamicResource Label}" Content="Garage" HorizontalAlignment="Center" Grid.Column="2"/>
-                </Grid>
-            </Border>
-
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="25, 150, 25, 25" VerticalScrollBarVisibility="Auto">
-                <Grid x:Name="CarsGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </ScrollViewer>
-        </Grid>
-
-        <Grid x:Name="CreateCarScreen" Visibility="Visible">
-            <TextBox x:Name="CarNameInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="CarNameLabel" Content="Name :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <TextBox x:Name="CarLicenceplateInput" Style="{DynamicResource Textbox}" Margin="0, -00, 0, 0"/>
-            <Label Style="{DynamicResource Label}" x:Name="CarLicenceplateLabel" Content="Licence plate :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <ComboBox x:Name="CarGarageInput" Height="50" Width="450" Margin="0, 0, 0, -200" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-            <Label Style="{DynamicResource Label}" x:Name="CarGarageLabel" Content="Garage :" Margin="0, 0, 0, -120"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <TextBox x:Name="CarKilometersInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, -400"/>
-            <Label Style="{DynamicResource Label}" x:Name="CarKilometersLabel" Content="Kilometers :" Margin="0, 0, 0, -320"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <Button Content="Create" x:Name="CreateCarButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateCarButton_Click"/>
-
-            <Button Content="Cancel" x:Name="CancelCarButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelCarButton_Click"/>
-        </Grid>
-
-        <Grid x:Name="ColorScreen" Visibility="Hidden">
-            <xctk:ColorPicker x:Name="ColorPrimaryInput" Height="50" Width="450" Margin="0, -400, 0, 0" Background="Transparent"/>
-            <Label Style="{DynamicResource Label}" x:Name="ColorPrimaryLabel" Content="Primary color :" Margin="0, -480, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <xctk:ColorPicker x:Name="ColorSecondaryInput" Height="50" Width="450" Margin="0, -200, 0, 0" Background="Transparent"/>
-            <Label Style="{DynamicResource Label}" x:Name="ColorSecondaryLabel" Content="Secondary color :" Margin="0, -280, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <xctk:ColorPicker x:Name="ColorBackgroundInput" Height="50" Width="450" Margin="0, 0, 0, 0" Background="Transparent"/>
-            <Label Style="{DynamicResource Label}" x:Name="ColorbackgroundLabel" Content="Background color :" Margin="0, -80, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-
-            <xctk:ColorPicker x:Name="ColorFontInput" Height="50" Width="450" Margin="0, 0, 0, -200" Background="Transparent" DropDownBackground="{DynamicResource SecondaryBrush}" Foreground="{DynamicResource FontColor}" HeaderForeground="{DynamicResource FontColor}"/>
-            <Label Style="{DynamicResource Label}" x:Name="colorFontLabel" Content="Text color :" Margin="0, 0, 0, -120" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-            
-            <Button Content="Save" x:Name="SaveColorButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="SaveColorButton_Click"/>
-
-            <Button Content="Cancel" x:Name="CancelColorButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelColorButton_Click"/>
-        </Grid>
-
-        <Border x:Name="ErrorWindow" Height="250" Width="400" CornerRadius="5" Background="#3e3e3e" Visibility="Hidden">
-            <Grid>
-                <TextBox x:Name="ErrorMessage" Text="ErrorMessage" BorderThickness="0" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" IsReadOnly="True" Cursor="Arrow" Margin="5, 5, 5, 75" Background="Transparent"/>
-
-                <Button Content="OK" x:Name="ErrorOkButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5, 5, 5, 5" Click="ErrorOkButton_Click"/>
+                <Button Grid.Row="2" x:Name="CarsButton" Content="Cars" Style="{DynamicResource ContextButton}" HorizontalAlignment="Left" Margin="130, 0, 0, 0" Click="CarsButton_Click"/>
             </Grid>
-        </Border>
+
+            <Grid x:Name="CreateRentScreen" Visibility="Hidden">
+                <ComboBox x:Name="RentUserInput" Height="50" Width="450" Cursor="Hand" Foreground="{DynamicResource FontColor}" Margin="-500, -200, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+                <Label Style="{DynamicResource Label}" x:Name="RentUserLabel" Content="User :" Margin="-500, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <ComboBox x:Name="RentCarInput" Height="50" Cursor="Hand" Width="450" Foreground="{DynamicResource FontColor}" Margin="0, -200, -500, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+                <Label Style="{DynamicResource Label}" x:Name="RentCarLabel" Content="Car :" Margin="0, -280, -500, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <DatePicker x:Name="RentFromDateInput" Foreground="{DynamicResource FontColor}" Template="{DynamicResource DatePickerTemplate1}" Style="{DynamicResource DatePicker}" Margin="-500, 0, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="RentFromDateLabel" Content="Form date :" Margin="-500, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <DatePicker x:Name="RentToDateInput" Foreground="{DynamicResource FontColor}" Template="{DynamicResource DatePickerTemplate1}" Style="{DynamicResource DatePicker}" Margin="0, 0, -500, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="RentToDateLabel" Content="To date :" Margin="0, -80, -500, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <Button Content="Create" x:Name="CreateRentButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateRentButton_Click"/>
+
+                <Button Content="Cancel" x:Name="CancelRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelRentButton_Click"/>
+
+                <Button Content="End rent" x:Name="EndRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="EndRentButton_Click"/>
+            </Grid>
+
+            <Grid x:Name="EndRentScreen" Visibility="Hidden">
+                <TextBox x:Name="RentKilometersMadeInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="RentKilometersMadeLabel" Content="Kilometers made :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+
+                <TextBox x:Name="RentCommentInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, -200" Height="250" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+                <Label Style="{DynamicResource Label}" x:Name="RentCommentLabel" Content="Comment :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <Button Content="End" x:Name="ConfirmEndRentButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="ConfirmEndRentButton_Click"/>
+
+                <Button Content="Cancel" x:Name="CancelEndRentButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelEndRentButton_Click"/>
+            </Grid>
+
+            <Grid x:Name="GarageScreen" Visibility="Hidden">
+                <Label Style="{DynamicResource Label}" x:Name="GarageLabel" Content="Garages" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25"/>
+
+                <Button x:Name="AddGarageButton" Style="{DynamicResource ContextButton}" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130, 25, 25, 25" Click="AddGarageButton_Click"/>
+
+                <Button x:Name="GarageBackButton" Style="{DynamicResource ContextButton}" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="GarageBackButton_Click"/>
+
+                <Border Background="Transparent" Margin="25, 90, 25, 0" Height="50" VerticalAlignment="Top">
+                    <Grid ShowGridLines="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Style="{DynamicResource Label}" Content="Name" HorizontalAlignment="Center"/>
+
+                        <Label Style="{DynamicResource Label}" Content="City" HorizontalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                </Border>
+
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="25, 150, 25, 25" VerticalScrollBarVisibility="Auto">
+                    <Grid x:Name="GaragesGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid x:Name="CreateGarageScreen" Visibility="Hidden">
+                <TextBox x:Name="GarageNameINput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="GarageNameLabel" Content="Name :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <ComboBox x:Name="GarageCityInput" Height="50" Width="450" Margin="0, 0, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+                <Label Style="{DynamicResource Label}" x:Name="GarageCityLabel" Content="City :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <Button Content="Create" x:Name="CreateGarageButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateGarageButton_Click"/>
+
+                <Button Content="Cancel" x:Name="CancelGarageButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelGarageButton_Click"/>
+            </Grid>
+
+            <Grid x:Name="CarScreen" Visibility="Hidden">
+                <Label  x:Name="CarLabel" Content="Cars" Style="{DynamicResource Label}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="25, 25, 25, 25"/>
+
+                <Button x:Name="AddCarButton" Style="{DynamicResource ContextButton}" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130, 25, 25, 25" Click="AddCarButton_Click"/>
+
+                <Button x:Name="CarBackButton" Style="{DynamicResource ContextButton}" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25, 25, 25, 25" Click="CarBackButton_Click"/>
+
+                <Border Background="Transparent" Margin="25, 90, 25, 0" Height="50" VerticalAlignment="Top">
+                    <Grid ShowGridLines="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Style="{DynamicResource Label}" Content="Car model" HorizontalAlignment="Center"/>
+
+                        <Label Style="{DynamicResource Label}" Content="Licence plate" HorizontalAlignment="Center" Grid.Column="1"/>
+
+                        <Label Style="{DynamicResource Label}" Content="Garage" HorizontalAlignment="Center" Grid.Column="2"/>
+                    </Grid>
+                </Border>
+
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="25, 150, 25, 25" VerticalScrollBarVisibility="Auto">
+                    <Grid x:Name="CarsGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid x:Name="CreateCarScreen" Visibility="Visible">
+                <TextBox x:Name="CarNameInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="CarNameLabel" Content="Name :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <TextBox x:Name="CarLicenceplateInput" Style="{DynamicResource Textbox}" Margin="0, -00, 0, 0"/>
+                <Label Style="{DynamicResource Label}" x:Name="CarLicenceplateLabel" Content="Licence plate :" Margin="0, -80, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <ComboBox x:Name="CarGarageInput" Height="50" Width="450" Margin="0, 0, 0, -200" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+                <Label Style="{DynamicResource Label}" x:Name="CarGarageLabel" Content="Garage :" Margin="0, 0, 0, -120"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <TextBox x:Name="CarKilometersInput" Style="{DynamicResource Textbox}" Margin="0, 0, 0, -400"/>
+                <Label Style="{DynamicResource Label}" x:Name="CarKilometersLabel" Content="Kilometers :" Margin="0, 0, 0, -320"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <Button Content="Create" x:Name="CreateCarButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="CreateCarButton_Click"/>
+
+                <Button Content="Cancel" x:Name="CancelCarButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelCarButton_Click"/>
+            </Grid>
+
+            <Grid x:Name="ColorScreen" Visibility="Hidden">
+                <xctk:ColorPicker x:Name="ColorPrimaryInput" Height="50" Width="450" Margin="0, -400, 0, 0" Background="Transparent"/>
+                <Label Style="{DynamicResource Label}" x:Name="ColorPrimaryLabel" Content="Primary color :" Margin="0, -480, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <xctk:ColorPicker x:Name="ColorSecondaryInput" Height="50" Width="450" Margin="0, -200, 0, 0" Background="Transparent"/>
+                <Label Style="{DynamicResource Label}" x:Name="ColorSecondaryLabel" Content="Secondary color :" Margin="0, -280, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <xctk:ColorPicker x:Name="ColorBackgroundInput" Height="50" Width="450" Margin="0, 0, 0, 0" Background="Transparent"/>
+                <Label Style="{DynamicResource Label}" x:Name="ColorbackgroundLabel" Content="Background color :" Margin="0, -80, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <xctk:ColorPicker x:Name="ColorFontInput" Height="50" Width="450" Margin="0, 0, 0, -200" Background="Transparent" DropDownBackground="{DynamicResource SecondaryBrush}" Foreground="{DynamicResource FontColor}" HeaderForeground="{DynamicResource FontColor}"/>
+                <Label Style="{DynamicResource Label}" x:Name="colorFontLabel" Content="Text color :" Margin="0, 0, 0, -120" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+
+                <Button Content="Save" x:Name="SaveColorButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 25, 25" Click="SaveColorButton_Click"/>
+
+                <Button Content="Cancel" x:Name="CancelColorButton" Style="{DynamicResource FalseButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="25, 25, 130, 25" Click="CancelColorButton_Click"/>
+            </Grid>
+
+            <Border x:Name="ErrorWindow" Height="250" Width="400" CornerRadius="5" Background="#3e3e3e" Visibility="Hidden">
+                <Grid>
+                    <TextBox x:Name="ErrorMessage" Text="ErrorMessage" BorderThickness="0" FontSize="24" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" IsReadOnly="True" Cursor="Arrow" Margin="5, 5, 5, 75" Background="Transparent"/>
+
+                    <Button Content="OK" x:Name="ErrorOkButton" Style="{DynamicResource TrueButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5, 5, 5, 5" Click="ErrorOkButton_Click"/>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

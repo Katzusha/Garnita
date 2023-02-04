@@ -1548,5 +1548,49 @@ namespace Garnita
                 DisplayError(ex.Message);
             }
         }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+            else if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            LoginScreen.Visibility = Visibility.Visible;
+            CarScreen.Visibility = Visibility.Hidden;
+            GarageScreen.Visibility = Visibility.Hidden;
+            RentScreen.Visibility = Visibility.Hidden;
+            ColorScreen.Visibility = Visibility.Hidden;
+            CreateCarScreen.Visibility = Visibility.Hidden;
+            CreateGarageScreen.Visibility = Visibility.Hidden;
+            CreateRentScreen.Visibility = Visibility.Hidden;
+            EndRentScreen.Visibility = Visibility.Hidden;
+
+            UsernameInput.Clear();
+            PasswordInput.Clear();
+        }
     }
 }

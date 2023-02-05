@@ -398,7 +398,7 @@ namespace Garnita
             {
                 conn.Open();
 
-                string strquery = "SELECT email FROM users";
+                string strquery = "SELECT email FROM users ORDER BY firstname DESC, surname DESC";
 
                 NpgsqlCommand cmd = new NpgsqlCommand(strquery, conn);
 
@@ -843,6 +843,8 @@ namespace Garnita
         {
             GarageScreen.Visibility = Visibility.Hidden;
             CreateGarageScreen.Visibility = Visibility.Visible;
+            GarageNameINput.Clear();
+            GarageCityInput.Items.Clear();
 
             Button btn = (Button)sender;
 
@@ -948,6 +950,8 @@ namespace Garnita
         {
             GarageScreen.Visibility = Visibility.Hidden;
             CreateGarageScreen.Visibility = Visibility.Visible;
+            GarageNameINput.Clear();
+            GarageCityInput.Items.Clear();
 
             try
             {
@@ -996,10 +1000,8 @@ namespace Garnita
 
                     if ((Int32)cmd.ExecuteScalar() == 1)
                     {
-                        RentUserInput.SelectedIndex = -1;
-                        RentUserInput.Items.Clear();
-                        RentCarInput.SelectedIndex = -1;
-                        RentCarInput.Items.Clear();
+                        GarageNameINput.Clear();
+                        GarageCityInput.Items.Clear();
 
                         RentFromDateInput.SelectedDate = DateTime.Now;
                         RentToDateInput.SelectedDate = DateTime.Now;
@@ -1013,10 +1015,8 @@ namespace Garnita
                     }
                     else if ((Int32)cmd.ExecuteScalar() == 0)
                     {
-                        RentUserInput.SelectedIndex = -1;
-                        RentUserInput.Items.Clear();
-                        RentCarInput.SelectedIndex = -1;
-                        RentCarInput.Items.Clear();
+                        GarageNameINput.Clear();
+                        GarageCityInput.Items.Clear();
 
                         RentFromDateInput.SelectedDate = DateTime.Now;
                         RentToDateInput.SelectedDate = DateTime.Now;
@@ -1059,7 +1059,7 @@ namespace Garnita
                     else if ((Int32)cmd.ExecuteScalar() == 0)
                     {
                         GarageNameINput.Clear();
-                        GarageCityInput.SelectedIndex = -1;
+                        GarageCityInput.Items.Clear();
 
                         MessageBox.Show("Wrong input. Please try again!");
                     }
@@ -1200,6 +1200,7 @@ namespace Garnita
                         CarNameInput.Text = reader.GetString(0).ToString();
                         CarLicenceplateInput.Text = reader.GetString(1).ToString();
                         CarGarageInput.Text = reader.GetString(2).ToString();
+                        CarKilometersInput.Text = reader.GetInt32(3).ToString();
                     }
                 }
 
@@ -1296,6 +1297,11 @@ namespace Garnita
             CreateCarScreen.Visibility = Visibility.Hidden;
             CarScreen.Visibility = Visibility.Visible;
 
+            CarNameInput.Clear();
+            CarLicenceplateInput.Clear();
+            CarGarageInput.Items.Clear();
+            CarKilometersInput.Clear();
+
             GenerateCars();
         }
 
@@ -1318,6 +1324,7 @@ namespace Garnita
                         CarGarageInput.Items.Clear();
                         CarNameInput.Clear();
                         CarLicenceplateInput.Clear();
+                        CarKilometersInput.Clear();
 
                         CreateCarScreen.Visibility = Visibility.Hidden;
                         CarScreen.Visibility = Visibility.Visible;
@@ -1332,6 +1339,7 @@ namespace Garnita
                         CarGarageInput.Items.Clear();
                         CarNameInput.Clear();
                         CarLicenceplateInput.Clear();
+                        CarKilometersInput.Clear();
 
                         MessageBox.Show("Wrong input. Please try again!");
                     }
@@ -1362,6 +1370,7 @@ namespace Garnita
                         CarGarageInput.Items.Clear();
                         CarNameInput.Clear();
                         CarLicenceplateInput.Clear();
+                        CarKilometersInput.Clear();
 
                         CreateCarScreen.Visibility = Visibility.Hidden;
                         CarScreen.Visibility = Visibility.Visible;
@@ -1376,6 +1385,7 @@ namespace Garnita
                         CarGarageInput.Items.Clear();
                         CarNameInput.Clear();
                         CarLicenceplateInput.Clear();
+                        CarKilometersInput.Clear();
 
                         MessageBox.Show("Wrong input. Please try again!");
                     }
@@ -1492,12 +1502,16 @@ namespace Garnita
         {
             CreateRentScreen.Visibility = Visibility.Hidden;
             EndRentScreen.Visibility = Visibility.Visible;
+            RentKilometersMadeInput.Clear();
+            RentCommentInput.Clear();
         }
 
         private void CancelEndRentButton_Click(object sender, RoutedEventArgs e)
         {
             CreateRentScreen.Visibility = Visibility.Visible;
             EndRentScreen.Visibility = Visibility.Hidden;
+            RentKilometersMadeInput.Clear();
+            RentCommentInput.Clear();
         }
 
         private void ConfirmEndRentButton_Click(object sender, RoutedEventArgs e)
@@ -1516,6 +1530,8 @@ namespace Garnita
                     RentUserInput.Items.Clear();
                     RentCarInput.SelectedIndex = -1;
                     RentCarInput.Items.Clear();
+                    RentKilometersMadeInput.Clear();
+                    RentCommentInput.Clear();
 
                     RentFromDateInput.SelectedDate = DateTime.Now;
                     RentToDateInput.SelectedDate = DateTime.Now;
@@ -1532,12 +1548,17 @@ namespace Garnita
                     RentUserInput.Items.Clear();
                     RentCarInput.SelectedIndex = -1;
                     RentCarInput.Items.Clear();
+                    RentKilometersMadeInput.Clear();
+                    RentCommentInput.Clear();
 
                     RentFromDateInput.SelectedDate = DateTime.Now;
                     RentToDateInput.SelectedDate = DateTime.Now;
 
                     MessageBox.Show("Wrong input. Please try again!");
                 }
+
+                RentKilometersMadeInput.Clear();
+                RentCommentInput.Clear();
 
                 conn.Close();
             }

@@ -800,7 +800,7 @@
                 </ScrollViewer>
             </Grid>
 
-            <Grid x:Name="CreateCarScreen" Visibility="Visible">
+            <Grid x:Name="CreateCarScreen" Visibility="Hidden">
                 <TextBox x:Name="CarNameInput" Style="{DynamicResource Textbox}" Margin="0, -200, 0, 0"/>
                 <Label Style="{DynamicResource Label}" x:Name="CarNameLabel" Content="Name :" Margin="0, -280, 0, 0"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
 

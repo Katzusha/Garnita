@@ -28,7 +28,7 @@ namespace Garnita
     /// </summary>
     public partial class MainWindow : Window
     {
-        string connstring = "Server=ep-purple-mode-252889.eu-central-1.aws.neon.tech;Database=Garnita;User Id=andraz.kosak;Password=2tUHlDPGdn7x;";
+        string connstring = "";
         NpgsqlConnection conn;
 
         #region ENCRYPTION AND DECRYPTION
